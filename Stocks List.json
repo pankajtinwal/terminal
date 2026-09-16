@@ -1,0 +1,794 @@
+[
+  {
+    "name": "Enviro Infra Engineers",
+    "ticker": "EIEL",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "India Glycols",
+    "ticker": "INDIAGLYCO",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "SML Mahindra",
+    "ticker": "SMLMAH",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Rishabh Instruments",
+    "ticker": "RISHABH",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Paisalo Digital",
+    "ticker": "PAISALO",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Yatharth Hospital & Trauma Care Services",
+    "ticker": "YATHARTH",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "HBL Engineering",
+    "ticker": "HBLENGINE",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Datamatics Global Services",
+    "ticker": "DATAMATICS",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Ashapura Minechem",
+    "ticker": "ASHAPURMIN",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Windlas Biotech",
+    "ticker": "WINDLAS",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "EPACK Durable",
+    "ticker": "EPACK",
+    "exchange": "NSE",
+    "sector": "Electronics & Consumer Durables"
+  },
+  {
+    "name": "Fineotex Chemical",
+    "ticker": "FCL",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "EFC (I)",
+    "ticker": "EFCIL",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "Nava",
+    "ticker": "NAVA",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Redington",
+    "ticker": "REDINGTON",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Power Mech Projects",
+    "ticker": "POWERMECH",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Sanghvi Movers",
+    "ticker": "SANGHVIMOV",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Subros",
+    "ticker": "SUBROS",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Poly Medicure",
+    "ticker": "POLYMED",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Avantel",
+    "ticker": "AVANTEL",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Acutaas Chemicals",
+    "ticker": "ACUTAAS",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Innova Captab",
+    "ticker": "INNOVACAP",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Macpower CNC Machines",
+    "ticker": "MACPOWER",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Transformers & Rectifiers (India)",
+    "ticker": "TRIL",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Newgen Software Technologies",
+    "ticker": "NEWGEN",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "BLS International Services",
+    "ticker": "BLS",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Blue Star",
+    "ticker": "BLUESTARCO",
+    "exchange": "NSE",
+    "sector": "Electronics & Consumer Durables"
+  },
+  {
+    "name": "Aptus Value Housing Finance",
+    "ticker": "APTUS",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Safari Industries (India)",
+    "ticker": "SAFARI",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Apcotex Industries",
+    "ticker": "APCOTEXIND",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Bank of Baroda",
+    "ticker": "BANKBARODA",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "FSN E-Commerce Ventures",
+    "ticker": "NYKAA",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "J Kumar Infraprojects",
+    "ticker": "JKIL",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Avalon Technologies",
+    "ticker": "AVALON",
+    "exchange": "NSE",
+    "sector": "Electronics & Consumer Durables"
+  },
+  {
+    "name": "Fiem Industries",
+    "ticker": "FIEMIND",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Jupiter Wagons",
+    "ticker": "JWL",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Bharat Electronics",
+    "ticker": "BEL",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Narayana Hrudayalaya",
+    "ticker": "NH",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Finolex Industries",
+    "ticker": "FINPIPE",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Repco Home Finance",
+    "ticker": "REPCOHOME",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "SJS Enterprises",
+    "ticker": "SJS",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Choice International",
+    "ticker": "CHOICEIN",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Nesco",
+    "ticker": "NESCO",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "KSB",
+    "ticker": "KSB",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Firstsource Solutions",
+    "ticker": "FSL",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Karur Vysya Bank",
+    "ticker": "KARURVYSYA",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "TD Power Systems",
+    "ticker": "TDPOWERSYS",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Vishnu Chemicals",
+    "ticker": "VISHNU",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Indegene",
+    "ticker": "INDEGENE",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Bajaj Housing Finance",
+    "ticker": "BAJAJHFL",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Anant Raj",
+    "ticker": "ANANTRAJ",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "Anand Rathi Share & Stock Brokers",
+    "ticker": "ARSSBL",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "NRB Bearings",
+    "ticker": "NRBBEARING",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Marksans Pharma",
+    "ticker": "MARKSANS",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "NGL Fine-Chem",
+    "ticker": "NGLFINE",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Triveni Engineering & Industries",
+    "ticker": "TRIVENI",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Insolation Energy",
+    "ticker": "INA",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Moschip Technologies",
+    "ticker": "MOSCHIP",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "KEI Industries",
+    "ticker": "KEI",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Tanla Platforms",
+    "ticker": "TANLA",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Shree Pushkar Chemicals & Fertilisers",
+    "ticker": "SHREEPUSHK",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Talbros Automotive Components",
+    "ticker": "TALBROAUTO",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Aadhar Housing Finance",
+    "ticker": "AADHARHFC",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Honasa Consumer",
+    "ticker": "HONASA",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Gabriel India",
+    "ticker": "GABRIEL",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "BCL Industries",
+    "ticker": "BCLIND",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Neuland Laboratories",
+    "ticker": "NEULANDLAB",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Astra Microwave Products",
+    "ticker": "ASTRAMICRO",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Rashi Peripherals",
+    "ticker": "RPTECH",
+    "exchange": "NSE",
+    "sector": "Electronics & Consumer Durables"
+  },
+  {
+    "name": "Pricol",
+    "ticker": "PRICOL",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "RateGain Travel Technologies",
+    "ticker": "RATEGAIN",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Manorama Industries",
+    "ticker": "MANORAMA",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "KP Green Engineering",
+    "ticker": "KPGEL",
+    "exchange": "BSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Arvind Smartspaces",
+    "ticker": "ARVINDSMART",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "Man Industries India",
+    "ticker": "MANINDS",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Krishana Phoschem",
+    "ticker": "KRISHANA",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Avanti Feeds",
+    "ticker": "AVANTIFEED",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Krystal Integrated Services",
+    "ticker": "KRYSTAL",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Home First Finance Company",
+    "ticker": "HOMEFIRST",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Bliss GVS Pharma",
+    "ticker": "BLISSGVS",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Gujarat Themis Biosyn",
+    "ticker": "GUJTHEM",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Deep Industries",
+    "ticker": "DEEPINDS",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Coforge",
+    "ticker": "COFORGE",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Sula Vineyards",
+    "ticker": "SULA",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "INDO-MIM",
+    "ticker": "INDOMIM",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Zen Technologies",
+    "ticker": "ZENTEC",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Ideaforge Technology",
+    "ticker": "IDEAFORGE",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Felix Industries",
+    "ticker": "FELIX",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Sudarshan Chemical Industries",
+    "ticker": "SUDARSCHEM",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Sharda Motor Industries",
+    "ticker": "SHARDAMOTR",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "City Union Bank",
+    "ticker": "CUB",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Axiscades Technologies",
+    "ticker": "AXISCADES",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Minda Corporation",
+    "ticker": "MINDACORP",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "SRM Contractors Limited",
+    "ticker": "SRM",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Garden Reach Shipbuilders & Engineers",
+    "ticker": "GRSE",
+    "exchange": "NSE",
+    "sector": "Defense & Aerospace"
+  },
+  {
+    "name": "Syrma SGS Technology",
+    "ticker": "SYRMA",
+    "exchange": "NSE",
+    "sector": "Electronics & Consumer Durables"
+  },
+  {
+    "name": "EMS",
+    "ticker": "EMS",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "Monte Carlo Fashions",
+    "ticker": "MONTECARLO",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "EPL",
+    "ticker": "EPL",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Aurobindo Pharma",
+    "ticker": "AUROPHARMA",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Authum Investment & Infrastructure",
+    "ticker": "AIIL",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "Godawari Power And Ispat",
+    "ticker": "GPIL",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Quality Power Electrical Equipments",
+    "ticker": "QPOWER",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Brigade Enterprises",
+    "ticker": "BRIGADE",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "Olectra Greentech",
+    "ticker": "OLECTRA",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Aarti Drugs",
+    "ticker": "AARTIDRUGS",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Piccadily Agro Industries",
+    "ticker": "PICCADIL",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Sri Lotus Developers And Realty",
+    "ticker": "LOTUSDEV",
+    "exchange": "NSE",
+    "sector": "Real Estate & Realty"
+  },
+  {
+    "name": "Acme Solar Holdings",
+    "ticker": "ACMESOLAR",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Remsons Industries",
+    "ticker": "REMSONSIND",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Bajaj Consumer Care",
+    "ticker": "BAJAJCON",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Apollo Hospitals Enterprise",
+    "ticker": "APOLLOHOSP",
+    "exchange": "NSE",
+    "sector": "Pharmaceuticals & Healthcare"
+  },
+  {
+    "name": "Sagility",
+    "ticker": "SAGILITY",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "The Anup Engineering",
+    "ticker": "ANUP",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "RBZ Jewellers",
+    "ticker": "RBZJEWEL",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Belrise Industries",
+    "ticker": "BELRISE",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Denta Water And Infra Solutions",
+    "ticker": "DENTA",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  },
+  {
+    "name": "ASK Automotive",
+    "ticker": "ASKAUTOLTD",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Waaree Renewable Technologies",
+    "ticker": "WAAREERTL",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Royal Orchid Hotels",
+    "ticker": "ROHLTD",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Sharda Cropchem",
+    "ticker": "SHARDACROP",
+    "exchange": "NSE",
+    "sector": "Chemicals & Materials"
+  },
+  {
+    "name": "Mrs. Bectors Food Specialities",
+    "ticker": "BECTORFOOD",
+    "exchange": "NSE",
+    "sector": "Consumer Goods & Retail"
+  },
+  {
+    "name": "Travel Food Services",
+    "ticker": "TRAVELFOOD",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Lumax Auto Technologies",
+    "ticker": "LUMAXTECH",
+    "exchange": "NSE",
+    "sector": "Auto & Ancillaries"
+  },
+  {
+    "name": "Vikram Solar",
+    "ticker": "VIKRAMSOLR",
+    "exchange": "NSE",
+    "sector": "Renewable Energy & Utilities"
+  },
+  {
+    "name": "Texmaco Rail & Engineering",
+    "ticker": "TEXRAIL",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "GE Vernova T&D India",
+    "ticker": "GVT&D",
+    "exchange": "NSE",
+    "sector": "Capital Goods & Engineering"
+  },
+  {
+    "name": "Western Carriers (India)",
+    "ticker": "WCIL",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "CMS Info Systems",
+    "ticker": "CMSINFO",
+    "exchange": "NSE",
+    "sector": "Financial Services"
+  },
+  {
+    "name": "TCI Express",
+    "ticker": "TCIEXP",
+    "exchange": "NSE",
+    "sector": "Logistics & Services"
+  },
+  {
+    "name": "Network People Services Technologies",
+    "ticker": "NPST",
+    "exchange": "NSE",
+    "sector": "IT & Tech Services"
+  },
+  {
+    "name": "Ahluwalia Contracts (India)",
+    "ticker": "AHLUCONT",
+    "exchange": "NSE",
+    "sector": "Infrastructure & Construction"
+  }
+]

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ultimate Dashboard — System Architecture & Technical Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-deep:     #080c14;
+      --bg-surface:  #0d1526;
+      --bg-card:     #111d35;
+      --bg-glass:    rgba(17,29,53,0.7);
+      --border:      rgba(99,132,255,0.18);
+      --border-subtle: rgba(255,255,255,0.06);
+      --accent-blue: #3b82f6;
+      --accent-indigo:#6366f1;
+      --accent-purple:#8b5cf6;
+      --accent-cyan:  #22d3ee;
+      --accent-green: #10b981;
+      --accent-yellow:#f59e0b;
+      --accent-orange:#f97316;
+      --accent-red:   #ef4444;
+      --text-primary: #f0f4ff;
+      --text-secondary: #94a3b8;
+      --text-muted:   #4b5a7a;
+      --radius-lg:    16px;
+      --radius-xl:    24px;
+      --font-body:    'Inter', sans-serif;
+      --font-head:    'Space Grotesk', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, rgba(59,130,246,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 80%, rgba(139,92,246,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(34,211,238,0.04) 0%, transparent 70%);
+    }
+    .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 28px 80px; }
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+    }
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.35);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-indigo);
+      margin-bottom: 36px;
+    }
+    .cover-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-indigo); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+    .cover h1 {
+      font-family: var(--font-head);
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, #94a3b8 60%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+    .cover-sub {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+    .cover-meta { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+    .cover-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .cover-meta-item .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+    .cover-meta-item .value { font-family: var(--font-mono); font-size: 14px; color: var(--text-primary); font-weight: 500; }
+    .cover-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .section { padding: 64px 0 0; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+    .section-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .section-icon.blue  { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); }
+    .section-icon.purple{ background: rgba(139,92,246,0.15);  border: 1px solid rgba(139,92,246,0.3); }
+    .section-icon.cyan  { background: rgba(34,211,238,0.12);  border: 1px solid rgba(34,211,238,0.3); }
+    .section-icon.green { background: rgba(16,185,129,0.12);  border: 1px solid rgba(16,185,129,0.3); }
+    .section-icon.yellow{ background: rgba(245,158,11,0.12);  border: 1px solid rgba(245,158,11,0.3); }
+    .section-icon.orange{ background: rgba(249,115,22,0.12);  border: 1px solid rgba(249,115,22,0.3); }
+    .section-title { font-family: var(--font-head); font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-primary); }
+    .section-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 28px; margin-bottom: 20px;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99,132,255,0.4), transparent);
+    }
+    .card-title { font-family: var(--font-head); font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
+    .card-body { color: var(--text-secondary); font-size: 14.5px; line-height: 1.75; }
+    .card-body p { margin-bottom: 10px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media(max-width:700px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } }
+    .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 20px; }
+    @media(max-width:700px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 18px; text-align: center; }
+    .stat-box .num {
+      font-family: var(--font-mono); font-size: 28px; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-box .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 4px; }
+    .pipeline-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 40px 28px; overflow-x: auto; }
+    .pipeline { display: flex; flex-direction: column; gap: 0; align-items: stretch; min-width: 620px; }
+    .pipe-layer { display: flex; align-items: stretch; gap: 12px; }
+    .pipe-layer-label {
+      writing-mode: vertical-lr; text-orientation: mixed; transform: rotate(180deg);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); min-width: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .pipe-nodes { flex: 1; display: flex; gap: 12px; align-items: stretch; }
+    .pipe-node {
+      flex: 1; border-radius: 14px; padding: 18px 16px; display: flex;
+      flex-direction: column; align-items: center; text-align: center; gap: 8px;
+      position: relative; border: 1px solid;
+    }
+    .pipe-node .node-icon { font-size: 24px; }
+    .pipe-node .node-title { font-size: 13px; font-weight: 700; font-family: var(--font-head); }
+    .pipe-node .node-desc  { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+    .node-trigger  { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .node-trigger .node-title { color: #f59e0b; }
+    .node-runner   { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
+    .node-runner .node-title  { color: var(--accent-blue); }
+    .node-python   { background: rgba(34,211,238,0.08); border-color: rgba(34,211,238,0.3); }
+    .node-python .node-title  { color: var(--accent-cyan); }
+    .node-math     { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3); }
+    .node-math .node-title    { color: var(--accent-purple); }
+    .node-storage  { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); }
+    .node-storage .node-title { color: var(--accent-green); }
+    .node-serve    { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.3); }
+    .node-serve .node-title   { color: var(--accent-orange); }
+    .node-frontend { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.35); }
+    .node-frontend .node-title { color: var(--accent-indigo); }
+    .pipe-arrow { display: flex; align-items: center; justify-content: center; padding: 6px 0; gap: 12px; }
+    .pipe-arrow-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(99,132,255,0.5), transparent); }
+    .pipe-arrow-center { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .pipe-arrow-icon { font-size: 18px; color: var(--text-muted); }
+    .pipe-arrow-label {
+      font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);
+      white-space: nowrap; background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      border-radius: 6px; padding: 2px 8px;
+    }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 14px; }
+    .tech-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; align-items: flex-start; gap: 14px; }
+    .tech-card .tc-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+    .tech-card .tc-name { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+    .tech-card .tc-role { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-top: 3px; }
+    .tech-card .tc-version { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); background: rgba(255,255,255,0.05); border-radius: 4px; padding: 1px 6px; margin-top: 4px; display: inline-block; }
+    .code-block { background: #060b18; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px 22px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.75; overflow-x: auto; color: #a5b4fc; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: flex; gap: 20px; position: relative; }
+    .tl-item:not(:last-child)::before { content: ''; position: absolute; left: 20px; top: 44px; bottom: -1px; width: 1px; background: var(--border-subtle); }
+    .tl-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; background: var(--bg-surface); border: 1px solid var(--border); position: relative; z-index: 1; }
+    .tl-content { padding-bottom: 32px; flex: 1; }
+    .tl-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text-primary); }
+    .tl-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; font-family: var(--font-mono); border-radius: 6px; padding: 3px 9px; border: 1px solid; }
+    .tag-blue   { color: var(--accent-blue);   border-color: rgba(59,130,246,0.35);  background: rgba(59,130,246,0.1); }
+    .tag-purple { color: var(--accent-purple); border-color: rgba(139,92,246,0.35);  background: rgba(139,92,246,0.1); }
+    .tag-green  { color: var(--accent-green);  border-color: rgba(16,185,129,0.35);  background: rgba(16,185,129,0.1); }
+    .tag-yellow { color: var(--accent-yellow); border-color: rgba(245,158,11,0.35);  background: rgba(245,158,11,0.1); }
+    .tag-cyan   { color: var(--accent-cyan);   border-color: rgba(34,211,238,0.35);  background: rgba(34,211,238,0.1); }
+    .tag-orange { color: var(--accent-orange); border-color: rgba(249,115,22,0.35);  background: rgba(249,115,22,0.1); }
+    .file-tree { background: #060b18; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px 22px; font-family: var(--font-mono); font-size: 12.5px; line-height: 2; }
+    .ft-dir  { color: var(--accent-blue); font-weight: 600; }
+    .ft-py   { color: var(--accent-cyan); }
+    .ft-html { color: var(--accent-orange); }
+    .ft-json { color: var(--accent-yellow); }
+    .ft-yml  { color: var(--accent-purple); }
+    .ft-md   { color: var(--text-secondary); }
+    .ft-comment { color: var(--text-muted); font-style: italic; }
+    .sched-row { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 10px; }
+    .sched-time { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--text-primary); min-width: 80px; }
+    .sched-desc { font-size: 13px; color: var(--text-secondary); }
+    .callout { border-left: 3px solid; padding: 14px 20px; border-radius: 0 10px 10px 0; margin: 20px 0; font-size: 14px; }
+    .callout-blue   { border-color: var(--accent-blue);   background: rgba(59,130,246,0.07); color: #93c5fd; }
+    .callout-green  { border-color: var(--accent-green);  background: rgba(16,185,129,0.07); color: #6ee7b7; }
+    .callout-yellow { border-color: var(--accent-yellow); background: rgba(245,158,11,0.08); color: #fcd34d; }
+    .toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px 32px; margin-bottom: 20px; }
+    .toc-title { font-family: var(--font-head); font-size: 11px; font-weight: 700; margin-bottom: 18px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+    .toc ol { padding-left: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px; }
+    @media(max-width:500px) { .toc ol { grid-template-columns: 1fr; } }
+    .toc li { font-size: 14px; }
+    .toc a { color: var(--text-secondary); text-decoration: none; transition: color .2s; }
+    .toc a:hover { color: var(--accent-blue); }
+    .footer { text-align: center; padding: 48px 0 32px; border-top: 1px solid var(--border-subtle); margin-top: 80px; color: var(--text-muted); font-size: 13px; }
+    .footer strong { color: var(--text-secondary); }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+    @media print {
+      body { background: #fff; color: #111; }
+      body::before { display: none; }
+      .cover-grid { display: none; }
+      .cover h1 { -webkit-text-fill-color: #111; }
+      .card, .toc, .pipeline-wrap, .tech-card, .file-tree, .code-block, .sched-row { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; }
+      .section { break-before: page; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-badge"><span class="dot"></span>Technical Architecture Document — v1.0</div>
+  <h1>The Ultimate<br/>Indian Market Dashboard</h1>
+  <p class="cover-sub">A deep-dive into the backend pipeline, index mathematics, automation architecture, and frontend rendering engine powering a real-time custom stock index platform.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="label">Stocks Tracked</span><span class="value">132</span></div>
+    <div class="cover-meta-item"><span class="label">Custom Indices</span><span class="value">14</span></div>
+    <div class="cover-meta-item"><span class="label">Sectors Covered</span><span class="value">13</span></div>
+    <div class="cover-meta-item"><span class="label">Daily Updates</span><span class="value">2x</span></div>
+    <div class="cover-meta-item"><span class="label">Architecture</span><span class="value">JAMstack</span></div>
+    <div class="cover-meta-item"><span class="label">Hosting Cost</span><span class="value">$0 / mo</span></div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <div class="toc fade-in">
+    <p class="toc-title">Table of Contents</p>
+    <ol>
+      <li><a href="#overview">System Overview</a></li>
+      <li><a href="#pipeline">Pipeline Flowchart</a></li>
+      <li><a href="#data">Data Ingestion Layer</a></li>
+      <li><a href="#math">Index Math Engine</a></li>
+      <li><a href="#heatmap">Heatmap Engine</a></li>
+      <li><a href="#automation">Automation &amp; CI/CD</a></li>
+      <li><a href="#frontend">Frontend Dashboard</a></li>
+      <li><a href="#files">File Structure</a></li>
+      <li><a href="#stack">Technology Stack</a></li>
+      <li><a href="#howto">How to Run Locally</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Overview -->
+  <div class="section fade-in" id="overview">
+    <div class="section-header">
+      <div class="section-icon blue">&#127959;</div>
+      <div><div class="section-title">System Overview</div><div class="section-subtitle">The big picture — what this system does and how</div></div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">132</div><div class="lbl">Stocks Ingested</div></div>
+      <div class="stat-box"><div class="num">14</div><div class="lbl">Indices Synthesized</div></div>
+      <div class="stat-box"><div class="num">6</div><div class="lbl">Timeframes Computed</div></div>
+      <div class="stat-box"><div class="num">$0</div><div class="lbl">Monthly Cost</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🎯 What This System Does</div>
+      <div class="card-body">
+        <p>This platform is a <strong>fully serverless, zero-cost financial analytics dashboard</strong> for 132 hand-picked Indian small- and mid-cap stocks. Unlike Nifty50 (market-cap weighted), this system synthesizes <strong>custom equal-weighted indices</strong> — one master index and 13 sector sub-indices — using a base of 1000 on the first day of data.</p>
+        <p>The system answers a core question: <em>"If you had invested equally in all stocks within a sector, how would that portfolio look as a single chart today?"</em></p>
+        <p>Everything is updated twice daily, deployed to the edge via Cloudflare Pages, and rendered in the browser — no backend server required, no database, no cost.</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card fade-in">
+        <div class="card-title">💡 Core Design Philosophy</div>
+        <div class="card-body">
+          <p><strong>JAMstack architecture</strong> — Python computes data offline, commits static JSON to GitHub, and the HTML/JS frontend fetches it directly. No runtime server. No API keys exposed. No database. The "backend" is just a scheduled GitHub Action + Python script.</p>
+        </div>
+      </div>
+      <div class="card fade-in">
+        <div class="card-title">🔑 Key Design Decisions</div>
+        <div class="card-body">
+          <p>• <strong>Delta cache</strong> — only fetches new trading days each run<br/>
+             • <strong>Equal-weighting</strong> — no stock dominates by market cap<br/>
+             • <strong>Base 1000</strong> — intuitive, like Nifty. Easy % gain from base<br/>
+             • <strong>Vendor-first assets</strong> — local JS libraries for offline resilience</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Pipeline -->
+  <div class="section fade-in" id="pipeline">
+    <div class="section-header">
+      <div class="section-icon yellow">🔄</div>
+      <div><div class="section-title">End-to-End Pipeline Flowchart</div><div class="section-subtitle">How data flows from Yahoo Finance to your browser</div></div>
+    </div>
+    <div class="pipeline-wrap fade-in">
+      <div class="pipeline">
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">TRIGGER</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-trigger">
+              <div class="node-icon">⏰</div>
+              <div class="node-title">Cron Schedule</div>
+              <div class="node-desc">07:30 UTC (1 PM IST)<br/>10:10 UTC (3:40 PM IST)<br/>Mon–Fri only</div>
+            </div>
+            <div class="pipe-node node-trigger">
+              <div class="node-icon">🖱️</div>
+              <div class="node-title">Manual Dispatch</div>
+              <div class="node-desc">GitHub UI → Actions →<br/>Run workflow<br/>Any time</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">github.com webhook</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">CI/CD</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-runner" style="flex:2">
+              <div class="node-icon">🐧</div>
+              <div class="node-title">GitHub Actions Runner (ubuntu-latest)</div>
+              <div class="node-desc">Checkout repo → Install Python 3.11 → pip install yfinance pandas → Execute build_indices.py</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">subprocess call</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">INGEST</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-python">
+              <div class="node-icon">📋</div>
+              <div class="node-title">Load Stocks List</div>
+              <div class="node-desc">Read Stocks List.json<br/>132 tickers + sectors</div>
+            </div>
+            <div class="pipe-node node-python">
+              <div class="node-icon">💾</div>
+              <div class="node-title">Delta Cache Check</div>
+              <div class="node-desc">Load data/history.json<br/>Find last cached date<br/>Fetch only new days</div>
+            </div>
+            <div class="pipe-node node-python">
+              <div class="node-icon">📡</div>
+              <div class="node-title">yfinance API</div>
+              <div class="node-desc">Fetch OHLCV from<br/>Yahoo Finance<br/>Rate limited: 1.5–3s</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">raw OHLCV DataFrames</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">COMPUTE</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-math">
+              <div class="node-icon">📐</div>
+              <div class="node-title">Normalize Base 1000</div>
+              <div class="node-desc">Each stock indexed to 1000<br/>on Day 0 of its history</div>
+            </div>
+            <div class="pipe-node node-math">
+              <div class="node-icon">⚖️</div>
+              <div class="node-title">Equal-Weighted Avg</div>
+              <div class="node-desc">Sum normalized prices<br/>÷ N stocks each day<br/>Synthesize OHLC</div>
+            </div>
+            <div class="pipe-node node-math">
+              <div class="node-icon">📊</div>
+              <div class="node-title">Multi-Timeframe Returns</div>
+              <div class="node-desc">1D · 1W · 1M · 3M<br/>6M · 1Y % change<br/>Per stock + per index</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">computed JSON objects</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">OUTPUT</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-storage">
+              <div class="node-icon">📁</div>
+              <div class="node-title">master_index.json</div>
+              <div class="node-desc">All 132 stocks combined<br/>OHLC candlestick series</div>
+            </div>
+            <div class="pipe-node node-storage">
+              <div class="node-icon">📂</div>
+              <div class="node-title">sector_*.json x13</div>
+              <div class="node-desc">Per-sector OHLC series<br/>One file per sector</div>
+            </div>
+            <div class="pipe-node node-storage">
+              <div class="node-icon">🗂️</div>
+              <div class="node-title">heatmap_data.json</div>
+              <div class="node-desc">Treemap hierarchy<br/>All timeframe returns</div>
+            </div>
+            <div class="pipe-node node-storage">
+              <div class="node-icon">📋</div>
+              <div class="node-title">indices_summary.json</div>
+              <div class="node-desc">Sector metadata<br/>Current values + %</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">git commit → git push → origin/main</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">DEPLOY</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-serve" style="flex:2">
+              <div class="node-icon">☁️</div>
+              <div class="node-title">Cloudflare Pages (Global CDN)</div>
+              <div class="node-desc">Auto-deploys on every push to main · Serves static files from 300+ edge locations worldwide · No server needed</div>
+            </div>
+          </div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-center"><div class="pipe-arrow-icon">↓</div><div class="pipe-arrow-label">HTTPS fetch()</div></div>
+          <div class="pipe-arrow-line"></div>
+        </div>
+        <div class="pipe-layer">
+          <div class="pipe-layer-label">FRONTEND</div>
+          <div class="pipe-nodes">
+            <div class="pipe-node node-frontend">
+              <div class="node-icon">📈</div>
+              <div class="node-title">Candlestick Charts</div>
+              <div class="node-desc">TradingView Lightweight<br/>Charts v5 · OHLC render<br/>+ Line chart toggle</div>
+            </div>
+            <div class="pipe-node node-frontend">
+              <div class="node-icon">🟩</div>
+              <div class="node-title">Heatmap Treemap</div>
+              <div class="node-desc">D3-hierarchy squarified<br/>Finviz-style layout<br/>6 timeframe modes</div>
+            </div>
+            <div class="pipe-node node-frontend">
+              <div class="node-icon">📋</div>
+              <div class="node-title">Constituents Table</div>
+              <div class="node-desc">Searchable / sortable<br/>All 132 stocks<br/>Multi-timeframe %</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Data Ingestion -->
+  <div class="section fade-in" id="data">
+    <div class="section-header">
+      <div class="section-icon cyan">📡</div>
+      <div><div class="section-title">Data Ingestion Layer</div><div class="section-subtitle">How we pull and cache 132 stocks from Yahoo Finance</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🔄 Delta Caching Strategy</div>
+      <div class="card-body">
+        <p>Rather than re-downloading full history every run, the pipeline uses a <strong>delta cache</strong> approach:</p>
+        <p>1. On first run → download <strong>1 year</strong> of daily OHLCV data for every stock and save to <code>data/history.json</code><br/>
+           2. On subsequent runs → check the <em>last date in cache</em> per ticker, fetch only new trading days<br/>
+           3. Merge new rows into existing cache and re-save</p>
+        <p>This reduces typical update time from ~15 minutes down to <strong>under 2 minutes</strong>.</p>
+      </div>
+    </div>
+    <div class="grid-2 fade-in">
+      <div class="card">
+        <div class="card-title">⚠️ Anti-Ban Rate Limiting</div>
+        <div class="card-body">
+          <p>Yahoo Finance throttles aggressive scrapers. The ingestion loop adds a <strong>random 1.5–3.0 second delay</strong> between each ticker fetch to avoid 429 errors.</p>
+          <div class="code-block" style="margin-top:12px;color:#67e8f9;">time.sleep(random.uniform(1.5, 3.0))</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔧 Ticker Symbol Overrides</div>
+        <div class="card-body">
+          <p>Some stocks have mismatches between NSE symbol and Yahoo Finance ticker. A manual override dict handles these:</p>
+          <div class="code-block" style="margin-top:12px;font-size:11px;color:#86efac;">"TRIL"     → "TARIL.NS"
+"INDEGENE" → "INDGN.NS"
+"PRICOL"   → "PRICOLLTD.NS"
+"EMS"      → "EMSLIMITED.NS"
+"KPGEL"    → "KPGEL.BO"</div>
+        </div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">📁 Stock Metadata Format (Stocks List.json)</div>
+      <div class="card-body">
+        <p>Each entry in <code>Stocks List.json</code> follows this schema:</p>
+        <div class="code-block" style="margin-top:12px;color:#fcd34d;">{ "ticker": "ZOMATO", "name": "Zomato Ltd", "sector": "Consumer Goods &amp; Retail", "exchange": "NSE" }</div>
+        <p style="margin-top:12px;">The <code>exchange</code> field determines the suffix: <span class="tag tag-blue">NSE → .NS</span>&nbsp;<span class="tag tag-yellow">BSE → .BO</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Math Engine -->
+  <div class="section fade-in" id="math">
+    <div class="section-header">
+      <div class="section-icon purple">📐</div>
+      <div><div class="section-title">Index Math Engine</div><div class="section-subtitle">Equal-weighted index synthesis with Base 1000 normalization</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">📌 The Core Formula</div>
+      <div class="card-body">
+        <p>Every stock's price history is <strong>normalized to a base of 1000</strong> on the first day it appears. This removes price bias — a ₹5 stock and a ₹5000 stock contribute equally.</p>
+        <div class="callout callout-blue"><strong>Normalized Price(t)</strong> = (Raw Close(t) / Raw Close(Day 0)) × 1000</div>
+        <p>The <strong>Index Value</strong> on any day is the arithmetic mean of all normalized prices in that sector:</p>
+        <div class="callout callout-blue"><strong>Index(t)</strong> = Σ [Normalized_i(t)] / N &nbsp;&nbsp;(where N = number of stocks)</div>
+        <p>Since all stocks start at 1000 on Day 0, the index also starts at 1000 — exactly like how Nifty started at 1000 on November 3, 1995.</p>
+      </div>
+    </div>
+    <div class="grid-2 fade-in">
+      <div class="card">
+        <div class="card-title">🕯️ Synthesized OHLC Candlesticks</div>
+        <div class="card-body">
+          <p>Each day's candle is synthesized:<br/>
+             • <strong>Open</strong>  = mean of all stocks' open<br/>
+             • <strong>High</strong>  = mean of all stocks' high<br/>
+             • <strong>Low</strong>   = mean of all stocks' low<br/>
+             • <strong>Close</strong> = mean of all stocks' close</p>
+          <p>This gives the chart a realistic look with wicks and bodies, just like a real index candle.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📆 Multi-Timeframe Returns</div>
+        <div class="card-body">
+          <p>6 return windows computed per stock &amp; index:<br/>
+             <span class="tag tag-blue">1D</span> 1 trading day back<br/>
+             <span class="tag tag-cyan">1W</span> 5 trading days back<br/>
+             <span class="tag tag-green">1M</span> 21 trading days back<br/>
+             <span class="tag tag-yellow">3M</span> 63 trading days back<br/>
+             <span class="tag tag-orange">6M</span> 126 trading days back<br/>
+             <span class="tag tag-purple">1Y</span> full year (first record)</p>
+        </div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🏭 Sector Qualification Rule</div>
+      <div class="card-body">
+        <p>A sector only gets its own sub-index if it has <strong>4 or more stocks</strong>. Smaller sectors are included in the Master Index but don't get a standalone chart.</p>
+        <p>Result: 1 Master Index + 13 Sector Sub-Indices = <strong>14 total indices</strong> across all 132 stocks.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Heatmap -->
+  <div class="section fade-in" id="heatmap">
+    <div class="section-header">
+      <div class="section-icon green">🟩</div>
+      <div><div class="section-title">Heatmap Engine</div><div class="section-subtitle">Finviz-style squarified treemap built with D3-hierarchy</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🗺️ Treemap Layout Algorithm</div>
+      <div class="card-body">
+        <p>The heatmap uses D3's <code>treemap()</code> with the <strong>squarify tiling</strong> algorithm — the same technique used by Finviz and Bloomberg. It recursively subdivides a rectangle into child rectangles with aspect ratios as close to 1:1 as possible.</p>
+        <p><strong>Tile size</strong> = absolute value of % return for the selected timeframe. Bigger movers = bigger tiles.<br/><strong>Tile color</strong> = diverging red–green scale:</p>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:16px;">
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#7f1d1d;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fca5a5;">≤ −5%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#991b1b;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fca5a5;">−3%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#b91c1c;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fca5a5;">−1%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#374151;display:flex;align-items:center;justify-content:center;font-size:11px;color:#9ca3af;">~0%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#14532d;display:flex;align-items:center;justify-content:center;font-size:11px;color:#86efac;">+1%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#15803d;display:flex;align-items:center;justify-content:center;font-size:11px;color:#86efac;">+3%</div>
+        <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#166534;display:flex;align-items:center;justify-content:center;font-size:11px;color:#86efac;">≥ +5%</div>
+      </div>
+    </div>
+    <div class="grid-2 fade-in">
+      <div class="card">
+        <div class="card-title">📐 Data Structure (heatmap_data.json)</div>
+        <div class="card-body">
+          <p>Follows D3's hierarchical format:</p>
+          <div class="code-block" style="margin-top:10px;font-size:11px;color:#fcd34d;">{ "name": "Market",
+  "children": [
+    { "name": "IT &amp; Tech Services",
+      "children": [
+        { "name": "INFY",
+          "returns": { "1d": 1.2, "1w": 3.4 },
+          "value": 1
+        }
+      ]
+    }
+  ]
+}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ Interactive Features</div>
+        <div class="card-body">
+          <p>• <strong>Timeframe toggle</strong> — switch 1D/1W/1M/3M/6M/1Y without re-fetching<br/>
+             • <strong>Hover tooltips</strong> — company name + % return<br/>
+             • <strong>Sector grouping</strong> — tiles grouped visually with labels<br/>
+             • <strong>Responsive canvas</strong> — resizes via ResizeObserver</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Automation -->
+  <div class="section fade-in" id="automation">
+    <div class="section-header">
+      <div class="section-icon orange">⚙️</div>
+      <div><div class="section-title">Automation &amp; CI/CD Pipeline</div><div class="section-subtitle">How the data stays fresh without manual intervention</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">📅 Update Schedule</div>
+      <div class="card-body">
+        <div class="sched-row">
+          <div class="sched-time">1:00 PM</div>
+          <span class="tag tag-cyan">IST</span>
+          <div class="sched-desc"><strong>Mid-Day Update</strong> — cron <code>30 7 * * 1-5</code> (07:30 UTC)<br/>Captures intraday price movement during active trading hours.</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-time">3:40 PM</div>
+          <span class="tag tag-green">IST</span>
+          <div class="sched-desc"><strong>Post-Market Close Update</strong> — cron <code>10 10 * * 1-5</code> (10:10 UTC)<br/>Runs 10 minutes after NSE closes. Captures final closing prices.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🔁 GitHub Actions Workflow — 5 Steps</div>
+      <div class="card-body">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot">1</div>
+            <div class="tl-content"><div class="tl-title">Checkout Repository</div><div class="tl-body">Uses <code>actions/checkout@v4</code> to clone the full repo onto the GitHub-hosted runner.</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">2</div>
+            <div class="tl-content"><div class="tl-title">Set Up Python 3.11 with pip cache</div><div class="tl-body">Uses <code>actions/setup-python@v5</code> with <code>cache: 'pip'</code> to accelerate dependency installs on repeat runs.</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">3</div>
+            <div class="tl-content"><div class="tl-title">Install Dependencies</div><div class="tl-body">Installs <code>yfinance</code>, <code>pandas</code>, and <code>requests</code>. Fast install thanks to pip cache.</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">4</div>
+            <div class="tl-content"><div class="tl-title">Execute build_indices.py</div><div class="tl-body">Runs the full data pipeline: load cache → fetch new data → compute indices → write JSON files to <code>data/</code>.</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">5</div>
+            <div class="tl-content"><div class="tl-title">Commit &amp; Push Changes</div><div class="tl-body">Stages only the <code>data/</code> folder. Uses <code>git diff --staged --quiet</code> to skip commit if nothing changed. Commit message includes <code>[skip ci]</code> to prevent infinite CI loops.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-green fade-in">
+      <strong>Zero Cost Automation:</strong> GitHub Actions gives 2,000 free minutes/month. Each run takes ~2 minutes. 2 runs/day × 22 market days = ~88 minutes/month — under 5% of the free quota.
+    </div>
+  </div>
+
+  <!-- 7. Frontend -->
+  <div class="section fade-in" id="frontend">
+    <div class="section-header">
+      <div class="section-icon blue">🖥️</div>
+      <div><div class="section-title">Frontend Dashboard</div><div class="section-subtitle">The ultra-premium dark-themed HTML/JS dashboard</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🏗️ Architecture</div>
+      <div class="card-body">
+        <p>The entire frontend is a <strong>single HTML file</strong> (<code>index.html</code>, ~68KB) with embedded CSS and JavaScript. No build step, no bundler, no framework. On page load, the JS fetches all required JSON files in parallel using <code>Promise.all()</code>, then renders each component.</p>
+      </div>
+    </div>
+    <div class="grid-3 fade-in">
+      <div class="card">
+        <div class="card-title">📈 Chart View</div>
+        <div class="card-body"><p>Powered by <strong>TradingView Lightweight Charts v5</strong>. Renders candlestick + volume. Toggle between Candle mode and Line mode. Fully interactive zoom, scroll, crosshair.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟩 Heatmap View</div>
+        <div class="card-body"><p>Rendered on a <strong>Canvas element</strong> via D3-hierarchy. Includes 6-timeframe toggle and hover tooltips.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Table View</div>
+        <div class="card-body"><p>Sortable, searchable table of all 132 stocks showing multi-timeframe performance. Live search filters on every keystroke.</p></div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">⚡ Lightweight Charts v5 — Breaking API Change</div>
+      <div class="card-body">
+        <p>TradingView made a breaking change in v5. Old API (throws errors in v5):</p>
+        <div class="code-block" style="margin-top:8px;color:#fca5a5;">chart.addCandlestickSeries({ ... }) // DEPRECATED in v5</div>
+        <p style="margin-top:12px;">Correct v5 API used in this project:</p>
+        <div class="code-block" style="margin-top:8px;color:#86efac;">chart.addSeries(LightweightCharts.CandlestickSeries, { ... }) // v5</div>
+        <p style="margin-top:12px;">Our implementation wraps both in a compatibility layer that detects which API is available.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. File Structure -->
+  <div class="section fade-in" id="files">
+    <div class="section-header">
+      <div class="section-icon cyan">📁</div>
+      <div><div class="section-title">Project File Structure</div><div class="section-subtitle">Every file explained</div></div>
+    </div>
+    <div class="file-tree fade-in">
+<span class="ft-dir">The Ultimate Dashboard/</span>
+├── <span class="ft-html">index.html</span>                       <span class="ft-comment"># Entire frontend — charts, heatmap, table</span>
+├── <span class="ft-py">build_indices.py</span>                  <span class="ft-comment"># Data pipeline — ingest, compute, export</span>
+├── <span class="ft-json">Stocks List.json</span>                  <span class="ft-comment"># 132 stocks: name, ticker, sector, exchange</span>
+├── <span class="ft-md">Project Plan.md</span>                   <span class="ft-comment"># Original project spec and requirements</span>
+│
+├── <span class="ft-dir">.github/workflows/</span>
+│   └── <span class="ft-yml">update_indices.yml</span>            <span class="ft-comment"># GitHub Actions cron automation</span>
+│
+└── <span class="ft-dir">data/</span>                            <span class="ft-comment"># Auto-generated by build_indices.py</span>
+    ├── <span class="ft-json">history.json</span>                  <span class="ft-comment"># Delta cache: full raw OHLCV for 132 stocks</span>
+    ├── <span class="ft-json">master_index.json</span>             <span class="ft-comment"># Combined OHLC series (all stocks)</span>
+    ├── <span class="ft-json">indices_summary.json</span>          <span class="ft-comment"># Sector list with current values &amp; % changes</span>
+    ├── <span class="ft-json">heatmap_data.json</span>             <span class="ft-comment"># D3 hierarchy for treemap (all timeframes)</span>
+    ├── <span class="ft-json">stocks_summary.json</span>           <span class="ft-comment"># Per-stock metadata + multi-timeframe returns</span>
+    ├── <span class="ft-json">sector_it_tech_services.json</span>
+    ├── <span class="ft-json">sector_financial_services.json</span>
+    ├── <span class="ft-json">sector_pharmaceuticals_healthcare.json</span>
+    ├── <span class="ft-json">sector_defense_aerospace.json</span>
+    ├── <span class="ft-json">sector_capital_goods_engineering.json</span>
+    ├── <span class="ft-json">sector_chemicals_materials.json</span>
+    ├── <span class="ft-json">sector_auto_ancillaries.json</span>
+    ├── <span class="ft-json">sector_consumer_goods_retail.json</span>
+    ├── <span class="ft-json">sector_infrastructure_construction.json</span>
+    ├── <span class="ft-json">sector_real_estate_realty.json</span>
+    ├── <span class="ft-json">sector_electronics_consumer_durables.json</span>
+    ├── <span class="ft-json">sector_logistics_services.json</span>
+    └── <span class="ft-json">sector_renewable_energy_utilities.json</span>
+    </div>
+  </div>
+
+  <!-- 9. Tech Stack -->
+  <div class="section fade-in" id="stack">
+    <div class="section-header">
+      <div class="section-icon purple">🛠️</div>
+      <div><div class="section-title">Technology Stack</div><div class="section-subtitle">Every library, service, and tool — all free and open-source</div></div>
+    </div>
+    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:24px;">The entire system is built on <strong>free, open-source, and zero-cost</strong> components.</p>
+
+    <div style="margin-bottom:12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Backend / Data Pipeline</div>
+    <div class="tech-grid fade-in">
+      <div class="tech-card"><div class="tc-icon">🐍</div><div><div class="tc-name">Python 3.11</div><div class="tc-role">Core scripting language for the entire data pipeline</div><div class="tc-version">v3.11</div></div></div>
+      <div class="tech-card"><div class="tc-icon">📊</div><div><div class="tc-name">yfinance</div><div class="tc-role">Yahoo Finance API wrapper for downloading OHLCV data</div><div class="tc-version">latest</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🐼</div><div><div class="tc-name">pandas</div><div class="tc-role">DataFrame operations, date alignment, resampling</div><div class="tc-version">latest</div></div></div>
+      <div class="tech-card"><div class="tc-icon">📦</div><div><div class="tc-name">json (stdlib)</div><div class="tc-role">Serializing computed data into static JSON output files</div><div class="tc-version">built-in</div></div></div>
+    </div>
+
+    <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Frontend / Visualization</div>
+    <div class="tech-grid fade-in">
+      <div class="tech-card"><div class="tc-icon">📈</div><div><div class="tc-name">TradingView Lightweight Charts</div><div class="tc-role">High-performance candlestick &amp; line chart rendering</div><div class="tc-version">v5.0</div></div></div>
+      <div class="tech-card"><div class="tc-icon">📐</div><div><div class="tc-name">D3-hierarchy</div><div class="tc-role">Squarified treemap layout algorithm for the heatmap</div><div class="tc-version">v7.x</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🌐</div><div><div class="tc-name">Vanilla HTML/CSS/JS</div><div class="tc-role">Zero framework overhead. No bundler. No build step.</div><div class="tc-version">ES2022</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🎨</div><div><div class="tc-name">Google Fonts</div><div class="tc-role">Inter, Space Grotesk, JetBrains Mono typography</div><div class="tc-version">CDN</div></div></div>
+    </div>
+
+    <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Automation &amp; Deployment</div>
+    <div class="tech-grid fade-in">
+      <div class="tech-card"><div class="tc-icon">⚙️</div><div><div class="tc-name">GitHub Actions</div><div class="tc-role">Cron-based CI/CD. Runs build_indices.py twice daily.</div><div class="tc-version">ubuntu-latest</div></div></div>
+      <div class="tech-card"><div class="tc-icon">☁️</div><div><div class="tc-name">Cloudflare Pages</div><div class="tc-role">Global CDN hosting. Auto-deploys on every git push.</div><div class="tc-version">Free tier</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🐙</div><div><div class="tc-name">GitHub</div><div class="tc-role">Version control + static data store (JSON as database)</div><div class="tc-version">Free tier</div></div></div>
+      <div class="tech-card"><div class="tc-icon">💰</div><div><div class="tc-name">Total Monthly Cost</div><div class="tc-role">100% free-tier. No credit card required. $0 forever.</div><div class="tc-version">$0.00 / mo</div></div></div>
+    </div>
+  </div>
+
+  <!-- 10. How to Run -->
+  <div class="section fade-in" id="howto">
+    <div class="section-header">
+      <div class="section-icon green">🚀</div>
+      <div><div class="section-title">How to Run Locally</div><div class="section-subtitle">Get the pipeline running on your machine in minutes</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">Step 1 — Install Python Dependencies</div>
+      <div class="code-block" style="color:#a5b4fc;"># Create a virtual environment (recommended)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install required packages
+pip install yfinance pandas requests</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">Step 2 — Run the Data Pipeline</div>
+      <div class="code-block" style="color:#a5b4fc;"># First run: fetches ~1 year of history for all 132 stocks
+# Takes 5-15 mins due to rate limiting (1.5-3s per stock)
+python build_indices.py
+
+# Subsequent runs are fast — delta only (new days only) ~1-2 minutes</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">Step 3 — Serve the Dashboard</div>
+      <div class="code-block" style="color:#a5b4fc;"># Use Python's built-in HTTP server (avoids CORS issues with local JSON)
+python3 -m http.server 8080
+
+# Open in your browser
+open http://localhost:8080</div>
+    </div>
+    <div class="callout callout-yellow fade-in">
+      <strong>Why a local server?</strong> The dashboard fetches JSON via <code>fetch()</code> which requires HTTP. Opening <code>index.html</code> directly as a <code>file://</code> URL triggers CORS errors and charts won't load.
+    </div>
+  </div>
+
+  <div class="footer fade-in">
+    <p><strong>The Ultimate Indian Market Dashboard</strong></p>
+    <p style="margin-top:8px;">Built with Python · TradingView Lightweight Charts · D3 · GitHub Actions · Cloudflare Pages</p>
+    <p style="margin-top:6px;">Architecture: JAMstack &nbsp;·&nbsp; Data: Yahoo Finance via yfinance &nbsp;·&nbsp; Cost: $0/month</p>
+  </div>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

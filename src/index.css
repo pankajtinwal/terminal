@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #09090b;
+  color: #f4f4f5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Institutional Terminal Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+@layer components {
+  /* Institutional Terminal Panels */
+  .terminal-panel, .glass-panel {
+    background: #121215;
+    border: 1px solid #27272a;
+  }
+
+  .terminal-card, .glass-card {
+    background: #121215;
+    border: 1px solid #27272a;
+  }
+
+  .terminal-subpanel {
+    background: #18181b;
+    border: 1px solid #27272a;
+  }
+
+  .terminal-input, .glass-input {
+    background: #0c0d10;
+    border: 1px solid #27272a;
+    color: #f4f4f5;
+    outline: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .terminal-input:focus, .glass-input:focus {
+    border-color: #52525b;
+    background: #121215;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@layer utilities {
+  .brand-border { border-color: #27272a; }
+  .brand-border-subtle { border-color: rgba(39, 39, 42, 0.6); }
+}
+
