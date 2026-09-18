@@ -25,6 +25,7 @@ import HeatmapCanvas from './components/HeatmapCanvas';
 import QuantDashboard from './components/quant/QuantDashboard';
 import Footer from './components/Footer';
 import LandingPage from './components/landing/LandingPage';
+import ViewSwitcher from './components/ViewSwitcher';
 
 export default function App() {
   // Page state: landing vs terminal
@@ -155,8 +156,6 @@ export default function App() {
   return (
     <div className="text-zinc-200 min-h-screen flex flex-col bg-[#09090b] selection:bg-emerald-500/20 selection:text-emerald-300 font-sans">
       <Navbar
-        view={view}
-        onViewChange={setView}
         watchlist={watchlist}
         onWatchlistChange={handleWatchlistChange}
         onRefresh={refresh}
@@ -165,7 +164,13 @@ export default function App() {
         onGoHome={handleGoHome}
       />
 
-      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
+      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4">
+        {/* Workspace Level View Navigation (Index Chart / Treemap / Quant Models) */}
+        <ViewSwitcher
+          view={view}
+          onViewChange={setView}
+          watchlist={watchlist}
+        />
 
         {/* ── CHART VIEW ─────────────────────────────── */}
         {view === 'chart' && (
