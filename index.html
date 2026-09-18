@@ -2,7 +2,19 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=1280, user-scalable=yes" id="viewport-meta" />
+    <script>
+      (function() {
+        // Enforce desktop layout on mobile devices (auto-scales 1280px desktop site to phone screen)
+        if (typeof window !== 'undefined' && window.screen && window.screen.width < 1280) {
+          var meta = document.getElementById('viewport-meta');
+          if (meta) {
+            var scale = (window.screen.width / 1280).toFixed(4);
+            meta.setAttribute('content', 'width=1280, initial-scale=' + scale + ', minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes');
+          }
+        }
+      })();
+    </script>
     <title>ALPHA 132 | Indian Stock Custom Index Engine &amp; Heatmap Visualizer</title>
     <meta name="description" content="Custom Equal-Weighted Index tracking, quantitative visualizer, and market treemap heatmap for 132 Indian stocks." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
