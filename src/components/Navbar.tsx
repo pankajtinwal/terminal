@@ -8,6 +8,7 @@ interface NavbarProps {
   onRefresh: () => void;
   loading: boolean;
   cacheStatus: string;
+  onGoHome?: () => void;
 }
 
 export default function Navbar({
@@ -18,13 +19,18 @@ export default function Navbar({
   onRefresh,
   loading,
   cacheStatus,
+  onGoHome,
 }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 bg-[#121215] border-b border-[#27272a]">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 h-[52px] relative flex items-center justify-between">
         {/* Brand & Watchlist Switcher */}
         <div className="flex items-center gap-3 z-10">
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2 cursor-pointer hover:opacity-85 transition"
+            onClick={onGoHome}
+            title="Return to Landing Page & Plans"
+          >
             <div className="w-7 h-7 rounded-md bg-[#18181b] border border-[#27272a] flex items-center justify-center">
               <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
@@ -35,6 +41,17 @@ export default function Navbar({
               TERMINAL
             </span>
           </div>
+
+          {onGoHome && (
+            <button
+              type="button"
+              onClick={onGoHome}
+              className="flex items-center gap-1 px-2 py-1 rounded text-xs font-mono text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition cursor-pointer"
+              title="Return to Landing Page & Plans"
+            >
+              <span className="hidden sm:inline">← Plans</span>
+            </button>
+          )}
 
           <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
 

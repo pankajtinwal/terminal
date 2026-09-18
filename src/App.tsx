@@ -24,8 +24,20 @@ import HeatmapControls from './components/HeatmapControls';
 import HeatmapCanvas from './components/HeatmapCanvas';
 import QuantDashboard from './components/quant/QuantDashboard';
 import Footer from './components/Footer';
+import LandingPage from './components/landing/LandingPage';
 
 export default function App() {
+  // Page state: landing vs terminal
+  const [page, setPage] = useState<'landing' | 'terminal'>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('view') === 'terminal' || window.location.hash === '#terminal') {
+        return 'terminal';
+      }
+    }
+    return 'landing';
+  });
+
   // Watchlist state
   const [watchlist, setWatchlist] = useState<WatchlistId>('investment');
   const { summaryData, heatmapData, loading, refresh } = useIndexData(watchlist);
@@ -116,9 +128,29 @@ export default function App() {
     setHmReturnFilter(null);
   }, []);
 
+  const handleLaunchTerminal = useCallback(() => {
+    setPage('terminal');
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', '#terminal');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  const handleGoHome = useCallback(() => {
+    setPage('landing');
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
   const cacheStatus = watchlist === 'mtf'
     ? (heatmapData ? `Active • ${heatmapData.total_stocks || 216} MTF Stocks` : 'Loading MTF...')
     : (summaryData ? `Active • ${summaryData.indices?.find(i => i.type === 'master')?.constituents_count ?? 132} Stocks` : 'Loading...');
+
+  if (page === 'landing') {
+    return <LandingPage onLaunchTerminal={handleLaunchTerminal} />;
+  }
 
   return (
     <div className="text-zinc-200 min-h-screen flex flex-col bg-[#09090b] selection:bg-emerald-500/20 selection:text-emerald-300 font-sans">
@@ -130,6 +162,7 @@ export default function App() {
         onRefresh={refresh}
         loading={loading}
         cacheStatus={cacheStatus}
+        onGoHome={handleGoHome}
       />
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
