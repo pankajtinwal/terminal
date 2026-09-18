@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Ultimate Dashboard — System Architecture & Technical Documentation</title>
+  <title>The Ultimate Dashboard — System Architecture & Technical Documentation v2.0</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -96,7 +96,7 @@
     .cover-sub {
       font-size: 18px;
       color: var(--text-secondary);
-      max-width: 600px;
+      max-width: 640px;
       margin-bottom: 48px;
     }
     .cover-meta { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
@@ -143,7 +143,8 @@
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
     @media(max-width:700px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } }
     .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 20px; }
-    @media(max-width:700px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:900px) { .stat-grid { grid-template-columns: repeat(3,1fr); } }
+    @media(max-width:600px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
     .stat-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 18px; text-align: center; }
     .stat-box .num {
       font-family: var(--font-mono); font-size: 28px; font-weight: 700;
@@ -215,10 +216,13 @@
     .file-tree { background: #060b18; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px 22px; font-family: var(--font-mono); font-size: 12.5px; line-height: 2; }
     .ft-dir  { color: var(--accent-blue); font-weight: 600; }
     .ft-py   { color: var(--accent-cyan); }
+    .ft-tsx  { color: #60a5fa; }
+    .ft-ts   { color: #93c5fd; }
     .ft-html { color: var(--accent-orange); }
     .ft-json { color: var(--accent-yellow); }
     .ft-yml  { color: var(--accent-purple); }
     .ft-md   { color: var(--text-secondary); }
+    .ft-css  { color: var(--accent-green); }
     .ft-comment { color: var(--text-muted); font-style: italic; }
     .sched-row { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 10px; }
     .sched-time { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--text-primary); min-width: 80px; }
@@ -227,6 +231,7 @@
     .callout-blue   { border-color: var(--accent-blue);   background: rgba(59,130,246,0.07); color: #93c5fd; }
     .callout-green  { border-color: var(--accent-green);  background: rgba(16,185,129,0.07); color: #6ee7b7; }
     .callout-yellow { border-color: var(--accent-yellow); background: rgba(245,158,11,0.08); color: #fcd34d; }
+    .callout-purple { border-color: var(--accent-purple); background: rgba(139,92,246,0.08); color: #c4b5fd; }
     .toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px 32px; margin-bottom: 20px; }
     .toc-title { font-family: var(--font-head); font-size: 11px; font-weight: 700; margin-bottom: 18px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
     .toc ol { padding-left: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px; }
@@ -238,6 +243,14 @@
     .footer strong { color: var(--text-secondary); }
     .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .fade-in.visible { opacity: 1; transform: none; }
+    .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:700px) { .model-grid { grid-template-columns: 1fr; } }
+    .model-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; position: relative; overflow: hidden; }
+    .model-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(99,132,255,0.4), transparent); }
+    .model-num { font-family: var(--font-mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 6px; }
+    .model-title { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    .model-axes { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); margin-bottom: 8px; }
+    .model-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
     @media print {
       body { background: #fff; color: #111; }
       body::before { display: none; }
@@ -252,16 +265,16 @@
 
 <div class="cover">
   <div class="cover-grid"></div>
-  <div class="cover-badge"><span class="dot"></span>Technical Architecture Document — v1.0</div>
-  <h1>The Ultimate<br/>Indian Market Dashboard</h1>
-  <p class="cover-sub">A deep-dive into the backend pipeline, index mathematics, automation architecture, and frontend rendering engine powering a real-time custom stock index platform.</p>
+  <div class="cover-badge"><span class="dot"></span>Technical Architecture Document — v2.0</div>
+  <h1>The Ultimate<br/>Indian Market Terminal</h1>
+  <p class="cover-sub">A complete deep-dive into the React + Vite frontend, dual-watchlist system, 5 quantitative scatter models, automated data pipeline, and JAMstack deployment powering a professional-grade Indian stock market terminal.</p>
   <div class="cover-meta">
-    <div class="cover-meta-item"><span class="label">Stocks Tracked</span><span class="value">132</span></div>
+    <div class="cover-meta-item"><span class="label">Investment Watchlist</span><span class="value">132 Stocks</span></div>
+    <div class="cover-meta-item"><span class="label">MTF Watchlist</span><span class="value">216 Stocks</span></div>
+    <div class="cover-meta-item"><span class="label">Quant Models</span><span class="value">5</span></div>
     <div class="cover-meta-item"><span class="label">Custom Indices</span><span class="value">14</span></div>
-    <div class="cover-meta-item"><span class="label">Sectors Covered</span><span class="value">13</span></div>
-    <div class="cover-meta-item"><span class="label">Daily Updates</span><span class="value">2x</span></div>
     <div class="cover-meta-item"><span class="label">Architecture</span><span class="value">JAMstack</span></div>
-    <div class="cover-meta-item"><span class="label">Hosting Cost</span><span class="value">$0 / mo</span></div>
+    <div class="cover-meta-item"><span class="label">Monthly Cost</span><span class="value">$0 / mo</span></div>
   </div>
 </div>
 
@@ -271,12 +284,14 @@
     <p class="toc-title">Table of Contents</p>
     <ol>
       <li><a href="#overview">System Overview</a></li>
+      <li><a href="#watchlists">Dual Watchlist System</a></li>
       <li><a href="#pipeline">Pipeline Flowchart</a></li>
       <li><a href="#data">Data Ingestion Layer</a></li>
       <li><a href="#math">Index Math Engine</a></li>
       <li><a href="#heatmap">Heatmap Engine</a></li>
+      <li><a href="#quant">Quantitative Models</a></li>
       <li><a href="#automation">Automation &amp; CI/CD</a></li>
-      <li><a href="#frontend">Frontend Dashboard</a></li>
+      <li><a href="#frontend">Frontend Architecture</a></li>
       <li><a href="#files">File Structure</a></li>
       <li><a href="#stack">Technology Stack</a></li>
       <li><a href="#howto">How to Run Locally</a></li>
@@ -290,39 +305,92 @@
       <div><div class="section-title">System Overview</div><div class="section-subtitle">The big picture — what this system does and how</div></div>
     </div>
     <div class="stat-grid">
-      <div class="stat-box"><div class="num">132</div><div class="lbl">Stocks Ingested</div></div>
-      <div class="stat-box"><div class="num">14</div><div class="lbl">Indices Synthesized</div></div>
-      <div class="stat-box"><div class="num">6</div><div class="lbl">Timeframes Computed</div></div>
+      <div class="stat-box"><div class="num">348</div><div class="lbl">Total Stocks Tracked</div></div>
+      <div class="stat-box"><div class="num">14</div><div class="lbl">Custom Indices</div></div>
+      <div class="stat-box"><div class="num">5</div><div class="lbl">Quant Models</div></div>
+      <div class="stat-box"><div class="num">3</div><div class="lbl">Dashboard Views</div></div>
+      <div class="stat-box"><div class="num">6</div><div class="lbl">Timeframes</div></div>
       <div class="stat-box"><div class="num">$0</div><div class="lbl">Monthly Cost</div></div>
     </div>
     <div class="card fade-in">
       <div class="card-title">🎯 What This System Does</div>
       <div class="card-body">
-        <p>This platform is a <strong>fully serverless, zero-cost financial analytics dashboard</strong> for 132 hand-picked Indian small- and mid-cap stocks. Unlike Nifty50 (market-cap weighted), this system synthesizes <strong>custom equal-weighted indices</strong> — one master index and 13 sector sub-indices — using a base of 1000 on the first day of data.</p>
-        <p>The system answers a core question: <em>"If you had invested equally in all stocks within a sector, how would that portfolio look as a single chart today?"</em></p>
-        <p>Everything is updated twice daily, deployed to the edge via Cloudflare Pages, and rendered in the browser — no backend server required, no database, no cost.</p>
+        <p>This is a <strong>fully serverless, zero-cost professional trading terminal</strong> for Indian markets. It tracks two separate watchlists — a curated <strong>Alpha 132 investment watchlist</strong> and an <strong>MTF swing-trading watchlist</strong> of 216 margin-eligible stocks — and synthesizes institutional-grade analytics for each.</p>
+        <p>The system answers two core questions: <em>"How do my sector bets look as equal-weighted index charts?"</em> and <em>"Which stocks are showing quantitative signals worth acting on right now?"</em></p>
+        <p>Everything is computed by a Python script, committed as static JSON to GitHub, auto-deployed via Cloudflare Pages, and rendered in a React + Vite browser app — no backend server, no database, no cost.</p>
       </div>
     </div>
     <div class="grid-2">
       <div class="card fade-in">
         <div class="card-title">💡 Core Design Philosophy</div>
         <div class="card-body">
-          <p><strong>JAMstack architecture</strong> — Python computes data offline, commits static JSON to GitHub, and the HTML/JS frontend fetches it directly. No runtime server. No API keys exposed. No database. The "backend" is just a scheduled GitHub Action + Python script.</p>
+          <p><strong>JAMstack architecture</strong> — Python computes data offline, commits static JSON to GitHub, and the React frontend fetches it directly. No runtime server. The "backend" is a scheduled GitHub Action + Python script running twice daily.</p>
         </div>
       </div>
       <div class="card fade-in">
         <div class="card-title">🔑 Key Design Decisions</div>
         <div class="card-body">
-          <p>• <strong>Delta cache</strong> — only fetches new trading days each run<br/>
+          <p>• <strong>Dual watchlist</strong> — Investment + MTF mode, switchable at runtime<br/>
+             • <strong>Delta cache</strong> — only fetches new trading days each run<br/>
              • <strong>Equal-weighting</strong> — no stock dominates by market cap<br/>
-             • <strong>Base 1000</strong> — intuitive, like Nifty. Easy % gain from base<br/>
-             • <strong>Vendor-first assets</strong> — local JS libraries for offline resilience</p>
+             • <strong>React + Vite</strong> — full TypeScript component tree, zero global state libraries</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Pipeline -->
+  <!-- 2. Dual Watchlist System -->
+  <div class="section fade-in" id="watchlists">
+    <div class="section-header">
+      <div class="section-icon cyan">🔀</div>
+      <div><div class="section-title">Dual Watchlist System</div><div class="section-subtitle">Alpha 132 investment mode vs MTF swing-trading mode</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🏗️ Architecture Overview</div>
+      <div class="card-body">
+        <p>The dashboard supports two completely independent watchlists that can be switched in real-time using the navbar toggle. Each watchlist has its own set of computed JSON files and its own data pipeline processing path. The React app uses a <code>WatchlistId</code> type (<code>'investment' | 'mtf'</code>) as the top-level state that drives all data fetching and view availability.</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card fade-in">
+        <div class="card-title">📊 Alpha 132 — Investment Watchlist</div>
+        <div class="card-body">
+          <p><strong>Purpose:</strong> Long-term portfolio management and sector analysis</p>
+          <p>• <strong>132 hand-picked</strong> Indian small- and mid-cap stocks<br/>
+             • Synthesizes <strong>14 equal-weighted indices</strong> (1 master + 13 sector)<br/>
+             • All 3 views available: <span class="tag tag-blue">Index Chart</span> <span class="tag tag-green">Heatmap</span> <span class="tag tag-purple">Quant</span><br/>
+             • Data source files: <code>indices_summary.json</code>, <code>heatmap_data.json</code>, <code>quant_models.json</code></p>
+        </div>
+      </div>
+      <div class="card fade-in">
+        <div class="card-title">⚡ MTF Stocks — Swing Trading Watchlist</div>
+        <div class="card-body">
+          <p><strong>Purpose:</strong> Swing trade candidate selection using 3.5x+ margin stocks</p>
+          <p>• <strong>216 stocks</strong> eligible for MTF (Margin Trade Funding) at ≥3.5x margin<br/>
+             • No index chart view (not tracked as index constituents)<br/>
+             • Available views: <span class="tag tag-green">Heatmap</span> <span class="tag tag-purple">Quant</span><br/>
+             • Data source files: <code>mtf_heatmap_data.json</code>, <code>mtf_quant_models.json</code><br/>
+             • Clicking a heatmap tile navigates directly to <strong>Quant Models</strong> with that stock selected</p>
+        </div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🔄 Runtime Switching Behavior</div>
+      <div class="card-body">
+        <p>When the user clicks the <strong>Alpha 132 / MTF Stocks</strong> toggle in the navbar:</p>
+        <p>1. <code>App.tsx</code> calls <code>handleWatchlistChange()</code> which updates the <code>watchlist</code> state<br/>
+           2. If switching to MTF and current view is <code>'chart'</code>, the view auto-redirects to <code>'heatmap'</code><br/>
+           3. Both <code>useIndexData</code> and <code>useQuantData</code> hooks re-fire their <code>refresh()</code> callbacks, fetching the watchlist-specific JSON files<br/>
+           4. The selected quant ticker is reset to <code>null</code> to clear cross-watchlist state<br/>
+           5. The navbar center tab group dynamically shows/hides the "Index Chart" button based on watchlist</p>
+      </div>
+    </div>
+    <div class="callout callout-purple fade-in">
+      <strong>MTF Stock Selection Philosophy:</strong> The MTF watchlist is used to identify which stock to buy for a swing trade. The Quant Models + Heatmap combination lets you quickly spot momentum outliers and mean-reversion setups across 216 stocks simultaneously — a workflow that would take hours manually.
+    </div>
+  </div>
+
+  <!-- 3. Pipeline -->
   <div class="section fade-in" id="pipeline">
     <div class="section-header">
       <div class="section-icon yellow">🔄</div>
@@ -356,7 +424,7 @@
             <div class="pipe-node node-runner" style="flex:2">
               <div class="node-icon">🐧</div>
               <div class="node-title">GitHub Actions Runner (ubuntu-latest)</div>
-              <div class="node-desc">Checkout repo → Install Python 3.11 → pip install yfinance pandas → Execute build_indices.py</div>
+              <div class="node-desc">Checkout repo → Python 3.11 → pip install yfinance pandas numpy → Execute build_indices.py --watchlist all</div>
             </div>
           </div>
         </div>
@@ -370,8 +438,8 @@
           <div class="pipe-nodes">
             <div class="pipe-node node-python">
               <div class="node-icon">📋</div>
-              <div class="node-title">Load Stocks List</div>
-              <div class="node-desc">Read Stocks List.json<br/>132 tickers + sectors</div>
+              <div class="node-title">Load Both Watchlists</div>
+              <div class="node-desc">Stocks List.json (132)<br/>MTF Stocks.json (216)<br/>SYMBOL_OVERRIDES map</div>
             </div>
             <div class="pipe-node node-python">
               <div class="node-icon">💾</div>
@@ -396,17 +464,17 @@
             <div class="pipe-node node-math">
               <div class="node-icon">📐</div>
               <div class="node-title">Normalize Base 1000</div>
-              <div class="node-desc">Each stock indexed to 1000<br/>on Day 0 of its history</div>
+              <div class="node-desc">Investment only<br/>Each stock indexed to 1000<br/>on Day 0 of its history</div>
             </div>
             <div class="pipe-node node-math">
               <div class="node-icon">⚖️</div>
-              <div class="node-title">Equal-Weighted Avg</div>
-              <div class="node-desc">Sum normalized prices<br/>÷ N stocks each day<br/>Synthesize OHLC</div>
+              <div class="node-title">Equal-Weighted Indices</div>
+              <div class="node-desc">1 Master + 13 Sectors<br/>Synthesized OHLC<br/>Multi-timeframe returns</div>
             </div>
             <div class="pipe-node node-math">
-              <div class="node-icon">📊</div>
-              <div class="node-title">Multi-Timeframe Returns</div>
-              <div class="node-desc">1D · 1W · 1M · 3M<br/>6M · 1Y % change<br/>Per stock + per index</div>
+              <div class="node-icon">🔬</div>
+              <div class="node-title">5 Quant Models</div>
+              <div class="node-desc">EMA · Momentum · Kinematic<br/>Ornstein-Uhlenbeck · Fractal<br/>Both watchlists</div>
             </div>
           </div>
         </div>
@@ -420,23 +488,13 @@
           <div class="pipe-nodes">
             <div class="pipe-node node-storage">
               <div class="node-icon">📁</div>
-              <div class="node-title">master_index.json</div>
-              <div class="node-desc">All 132 stocks combined<br/>OHLC candlestick series</div>
+              <div class="node-title">Investment JSONs</div>
+              <div class="node-desc">indices_summary · heatmap_data<br/>sector_*.json × 13<br/>quant_models.json</div>
             </div>
             <div class="pipe-node node-storage">
               <div class="node-icon">📂</div>
-              <div class="node-title">sector_*.json x13</div>
-              <div class="node-desc">Per-sector OHLC series<br/>One file per sector</div>
-            </div>
-            <div class="pipe-node node-storage">
-              <div class="node-icon">🗂️</div>
-              <div class="node-title">heatmap_data.json</div>
-              <div class="node-desc">Treemap hierarchy<br/>All timeframe returns</div>
-            </div>
-            <div class="pipe-node node-storage">
-              <div class="node-icon">📋</div>
-              <div class="node-title">indices_summary.json</div>
-              <div class="node-desc">Sector metadata<br/>Current values + %</div>
+              <div class="node-title">MTF JSONs</div>
+              <div class="node-desc">mtf_heatmap_data<br/>mtf_quant_models<br/>Both in data/ + public/data/</div>
             </div>
           </div>
         </div>
@@ -451,7 +509,7 @@
             <div class="pipe-node node-serve" style="flex:2">
               <div class="node-icon">☁️</div>
               <div class="node-title">Cloudflare Pages (Global CDN)</div>
-              <div class="node-desc">Auto-deploys on every push to main · Serves static files from 300+ edge locations worldwide · No server needed</div>
+              <div class="node-desc">Auto-deploys on every push to main · Serves Vite-built static bundle from 300+ edge locations · No server needed</div>
             </div>
           </div>
         </div>
@@ -465,18 +523,18 @@
           <div class="pipe-nodes">
             <div class="pipe-node node-frontend">
               <div class="node-icon">📈</div>
-              <div class="node-title">Candlestick Charts</div>
-              <div class="node-desc">TradingView Lightweight<br/>Charts v5 · OHLC render<br/>+ Line chart toggle</div>
+              <div class="node-title">Index Chart View</div>
+              <div class="node-desc">TradingView Lightweight<br/>Charts v5 · OHLC<br/>Investment mode only</div>
             </div>
             <div class="pipe-node node-frontend">
               <div class="node-icon">🟩</div>
-              <div class="node-title">Heatmap Treemap</div>
-              <div class="node-desc">D3-hierarchy squarified<br/>Finviz-style layout<br/>6 timeframe modes</div>
+              <div class="node-title">Market Treemap</div>
+              <div class="node-desc">D3-hierarchy squarified<br/>Both watchlists<br/>6 timeframe modes</div>
             </div>
             <div class="pipe-node node-frontend">
-              <div class="node-icon">📋</div>
-              <div class="node-title">Constituents Table</div>
-              <div class="node-desc">Searchable / sortable<br/>All 132 stocks<br/>Multi-timeframe %</div>
+              <div class="node-icon">🔬</div>
+              <div class="node-title">Quant Models</div>
+              <div class="node-desc">5 scatter models<br/>OLS regression overlay<br/>Interactive watchlist table</div>
             </div>
           </div>
         </div>
@@ -484,11 +542,11 @@
     </div>
   </div>
 
-  <!-- 3. Data Ingestion -->
+  <!-- 4. Data Ingestion -->
   <div class="section fade-in" id="data">
     <div class="section-header">
       <div class="section-icon cyan">📡</div>
-      <div><div class="section-title">Data Ingestion Layer</div><div class="section-subtitle">How we pull and cache 132 stocks from Yahoo Finance</div></div>
+      <div><div class="section-title">Data Ingestion Layer</div><div class="section-subtitle">How we pull and cache 348 stocks from Yahoo Finance</div></div>
     </div>
     <div class="card fade-in">
       <div class="card-title">🔄 Delta Caching Strategy</div>
@@ -496,7 +554,8 @@
         <p>Rather than re-downloading full history every run, the pipeline uses a <strong>delta cache</strong> approach:</p>
         <p>1. On first run → download <strong>1 year</strong> of daily OHLCV data for every stock and save to <code>data/history.json</code><br/>
            2. On subsequent runs → check the <em>last date in cache</em> per ticker, fetch only new trading days<br/>
-           3. Merge new rows into existing cache and re-save</p>
+           3. Merge new rows into existing cache and re-save<br/>
+           4. The <code>history.json</code> file is excluded from the <code>public/data/</code> sync (it can be very large and is not consumed by the frontend)</p>
         <p>This reduces typical update time from ~15 minutes down to <strong>under 2 minutes</strong>.</p>
       </div>
     </div>
@@ -511,30 +570,32 @@
       <div class="card">
         <div class="card-title">🔧 Ticker Symbol Overrides</div>
         <div class="card-body">
-          <p>Some stocks have mismatches between NSE symbol and Yahoo Finance ticker. A manual override dict handles these:</p>
+          <p>Some stocks have mismatches between NSE symbol and Yahoo Finance ticker. A <code>SYMBOL_OVERRIDES</code> dict handles these edge cases:</p>
           <div class="code-block" style="margin-top:12px;font-size:11px;color:#86efac;">"TRIL"     → "TARIL.NS"
 "INDEGENE" → "INDGN.NS"
 "PRICOL"   → "PRICOLLTD.NS"
 "EMS"      → "EMSLIMITED.NS"
-"KPGEL"    → "KPGEL.BO"</div>
+"KPGEL"    → "KPGEL.BO"
+"LTIM"     → "540005.BO"  # MTF override</div>
         </div>
       </div>
     </div>
     <div class="card fade-in">
-      <div class="card-title">📁 Stock Metadata Format (Stocks List.json)</div>
+      <div class="card-title">📁 Stock Metadata Formats</div>
       <div class="card-body">
-        <p>Each entry in <code>Stocks List.json</code> follows this schema:</p>
+        <p><strong>Stocks List.json</strong> (Investment) and <strong>MTF Stocks.json</strong> (Swing) both share this schema:</p>
         <div class="code-block" style="margin-top:12px;color:#fcd34d;">{ "ticker": "ZOMATO", "name": "Zomato Ltd", "sector": "Consumer Goods &amp; Retail", "exchange": "NSE" }</div>
         <p style="margin-top:12px;">The <code>exchange</code> field determines the suffix: <span class="tag tag-blue">NSE → .NS</span>&nbsp;<span class="tag tag-yellow">BSE → .BO</span></p>
+        <p style="margin-top:8px;">The <code>--watchlist</code> CLI flag controls which file is processed: <code>--watchlist all</code> (default in CI), <code>--watchlist investment</code>, or <code>--watchlist mtf</code>.</p>
       </div>
     </div>
   </div>
 
-  <!-- 4. Math Engine -->
+  <!-- 5. Math Engine -->
   <div class="section fade-in" id="math">
     <div class="section-header">
       <div class="section-icon purple">📐</div>
-      <div><div class="section-title">Index Math Engine</div><div class="section-subtitle">Equal-weighted index synthesis with Base 1000 normalization</div></div>
+      <div><div class="section-title">Index Math Engine</div><div class="section-subtitle">Equal-weighted index synthesis with Base 1000 normalization (Investment watchlist only)</div></div>
     </div>
     <div class="card fade-in">
       <div class="card-title">📌 The Core Formula</div>
@@ -551,11 +612,11 @@
         <div class="card-title">🕯️ Synthesized OHLC Candlesticks</div>
         <div class="card-body">
           <p>Each day's candle is synthesized:<br/>
-             • <strong>Open</strong>  = mean of all stocks' open<br/>
-             • <strong>High</strong>  = mean of all stocks' high<br/>
-             • <strong>Low</strong>   = mean of all stocks' low<br/>
-             • <strong>Close</strong> = mean of all stocks' close</p>
-          <p>This gives the chart a realistic look with wicks and bodies, just like a real index candle.</p>
+             • <strong>Open</strong>  = mean of all stocks' normalized open<br/>
+             • <strong>High</strong>  = mean of all stocks' normalized high<br/>
+             • <strong>Low</strong>   = mean of all stocks' normalized low<br/>
+             • <strong>Close</strong> = mean of all stocks' normalized close</p>
+          <p>This gives a realistic candle with wicks and bodies, just like a real index candle.</p>
         </div>
       </div>
       <div class="card">
@@ -575,22 +636,22 @@
       <div class="card-title">🏭 Sector Qualification Rule</div>
       <div class="card-body">
         <p>A sector only gets its own sub-index if it has <strong>4 or more stocks</strong>. Smaller sectors are included in the Master Index but don't get a standalone chart.</p>
-        <p>Result: 1 Master Index + 13 Sector Sub-Indices = <strong>14 total indices</strong> across all 132 stocks.</p>
+        <p>Result: 1 Master Index + 13 Sector Sub-Indices = <strong>14 total indices</strong> across all 132 investment stocks.</p>
       </div>
     </div>
   </div>
 
-  <!-- 5. Heatmap -->
+  <!-- 6. Heatmap -->
   <div class="section fade-in" id="heatmap">
     <div class="section-header">
       <div class="section-icon green">🟩</div>
-      <div><div class="section-title">Heatmap Engine</div><div class="section-subtitle">Finviz-style squarified treemap built with D3-hierarchy</div></div>
+      <div><div class="section-title">Heatmap Engine</div><div class="section-subtitle">Finviz-style squarified treemap built with D3-hierarchy — works for both watchlists</div></div>
     </div>
     <div class="card fade-in">
       <div class="card-title">🗺️ Treemap Layout Algorithm</div>
       <div class="card-body">
         <p>The heatmap uses D3's <code>treemap()</code> with the <strong>squarify tiling</strong> algorithm — the same technique used by Finviz and Bloomberg. It recursively subdivides a rectangle into child rectangles with aspect ratios as close to 1:1 as possible.</p>
-        <p><strong>Tile size</strong> = absolute value of % return for the selected timeframe. Bigger movers = bigger tiles.<br/><strong>Tile color</strong> = diverging red–green scale:</p>
+        <p><strong>Tile size</strong> = absolute value of % return (or equal in Equal-Sizing mode). Bigger movers = bigger tiles.<br/><strong>Tile color</strong> = diverging red–green scale:</p>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:16px;">
         <div style="flex:1;min-width:60px;height:36px;border-radius:8px;background:#7f1d1d;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fca5a5;">≤ −5%</div>
@@ -604,16 +665,28 @@
     </div>
     <div class="grid-2 fade-in">
       <div class="card">
-        <div class="card-title">📐 Data Structure (heatmap_data.json)</div>
+        <div class="card-title">⚡ Interactive Controls</div>
         <div class="card-body">
-          <p>Follows D3's hierarchical format:</p>
-          <div class="code-block" style="margin-top:10px;font-size:11px;color:#fcd34d;">{ "name": "Market",
-  "children": [
-    { "name": "IT &amp; Tech Services",
-      "children": [
-        { "name": "INFY",
-          "returns": { "1d": 1.2, "1w": 3.4 },
-          "value": 1
+          <p>• <strong>Timeframe toggle</strong> — 1D / 1W / 1M / 3M / 6M / 1Y<br/>
+             • <strong>Sector filter</strong> — show one sector at a time<br/>
+             • <strong>Search</strong> — live ticker/name search<br/>
+             • <strong>Return filter</strong> — click a stat chip to filter by return bucket<br/>
+             • <strong>Hierarchy mode</strong> — Sector grouping vs Flat layout<br/>
+             • <strong>Sizing mode</strong> — Equal tiles vs Magnitude-proportional tiles<br/>
+             • <strong>Tile click</strong> — in MTF mode, navigates to Quant Models with that stock selected</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📐 Data Structure</div>
+        <div class="card-body">
+          <p><code>heatmap_data.json</code> / <code>mtf_heatmap_data.json</code> follow D3's hierarchical format:</p>
+          <div class="code-block" style="margin-top:10px;font-size:11px;color:#fcd34d;">{ "updated_at": "...", "total_stocks": 216,
+  "sectors": [
+    { "name": "IT & Tech Services",
+      "slug": "it_tech_services",
+      "stocks": [
+        { "ticker": "INFY",
+          "returns": { "1d": 1.2, "1w": 3.4 }
         }
       ]
     }
@@ -621,19 +694,72 @@
 }</div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">⚡ Interactive Features</div>
-        <div class="card-body">
-          <p>• <strong>Timeframe toggle</strong> — switch 1D/1W/1M/3M/6M/1Y without re-fetching<br/>
-             • <strong>Hover tooltips</strong> — company name + % return<br/>
-             • <strong>Sector grouping</strong> — tiles grouped visually with labels<br/>
-             • <strong>Responsive canvas</strong> — resizes via ResizeObserver</p>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- 6. Automation -->
+  <!-- 7. Quant Models -->
+  <div class="section fade-in" id="quant">
+    <div class="section-header">
+      <div class="section-icon purple">🔬</div>
+      <div><div class="section-title">Quantitative Scatter Models</div><div class="section-subtitle">5 institutional-grade cross-sectional models for stock selection</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">📌 Architecture Overview</div>
+      <div class="card-body">
+        <p>The Quant view renders 5 interactive scatter plots computed by <code>build_indices.py</code> using <strong>numpy + pandas</strong>. Each model takes the full price history of every stock and outputs per-stock (x, y) coordinates plus statistical metadata. The frontend (<code>QuantScatterCanvas.tsx</code>) renders these with a custom Canvas API renderer — no charting library — with OLS regression overlay, interactive tooltip, and click-to-lock selection.</p>
+        <p>The same 5 models are computed independently for <strong>both watchlists</strong>, outputting <code>quant_models.json</code> and <code>mtf_quant_models.json</code>.</p>
+      </div>
+    </div>
+
+    <div class="model-grid fade-in">
+      <div class="model-card">
+        <div class="model-num">Model 1 — EMA</div>
+        <div class="model-title">EMA Mean Reversion Risk</div>
+        <div class="model-axes">X: % Distance from 50 EMA &nbsp;|&nbsp; Y: % Distance from 20 EMA</div>
+        <div class="model-desc">Identifies overbought rubber bands and pullback buy zones by plotting short-term vs medium-term EMA extension. Color encodes 200 EMA structural trend (Green = Bull, Red = Bear). Quadrant crosshair at (0,0) divides into 4 regimes. Stocks in Q3 (negative both axes, green) are the highest-quality pullback buys.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-num">Model 2 — Momentum</div>
+        <div class="model-title">Cross-Sectional Residual Momentum</div>
+        <div class="model-axes">X: 60-Day Log Return &nbsp;|&nbsp; Y: 5-Day Log Return</div>
+        <div class="model-desc">Identifies true idiosyncratic breakouts by regressing 5-day returns against 60-day returns. The OLS line shows the "expected" recent return given the longer trend. Stocks with studentized residuals above +2.0 (shown as outliers) are exhibiting genuine alpha — their recent move is not explained by the broad trend.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-num">Model 3 — Kinematic</div>
+        <div class="model-title">Velocity × Acceleration State Space</div>
+        <div class="model-axes">X: Standardized Price Velocity &nbsp;|&nbsp; Y: Standardized Price Acceleration</div>
+        <div class="model-desc">Treats price as a physical system. Velocity = 10-day momentum normalized by 60-day std dev. Acceleration = second derivative (momentum of momentum). Q2 stocks (positive velocity, negative acceleration) are at inflection — they were going up but are decelerating, signaling an imminent trend change. Mahalanobis distance identifies statistical extremes.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-num">Model 4 — O-U Process</div>
+        <div class="model-title">Ornstein-Uhlenbeck Mean Reversion</div>
+        <div class="model-axes">X: AR(1) Mean Reversion Speed (β) &nbsp;|&nbsp; Y: Current Spread Z-Score</div>
+        <div class="model-desc">Fits an AR(1) process to each stock's log price spread from its 20-day SMA. The fitted β coefficient indicates mean-reversion speed; z-score indicates current displacement. Stocks with high β (elastic) and extreme z-scores are the most tradeable mean-reversion candidates. Half-life = -ln(2)/ln(β) days.</div>
+      </div>
+      <div class="model-card" style="grid-column: 1 / -1;">
+        <div class="model-num">Model 5 — Fractal</div>
+        <div class="model-title">Hurst Exponent Regime Classification</div>
+        <div class="model-axes">X: Hurst Exponent (H) &nbsp;|&nbsp; Y: Distance from 50-Day SMA</div>
+        <div class="model-desc">Computes the Hurst exponent via R/S (Rescaled Range) analysis on 60-day return windows. H &lt; 0.4 = mean-reverting (anti-persistent), H ≈ 0.5 = random walk, H &gt; 0.6 = trending (persistent). Regime color-coding lets you quickly identify which stocks are in breakout-friendly trending regimes vs. chop. "Anti-Fade" stocks (H &lt; 0.4, far from SMA) have the highest statistical probability of snapback.</div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="margin-top:20px;">
+      <div class="card-title">🖥️ Frontend Components</div>
+      <div class="card-body">
+        <p>• <code>QuantDashboard.tsx</code> — top-level orchestrator; loads data, manages model selection state<br/>
+           • <code>QuantModelTabs.tsx</code> — 5-tab selector with live signal count badges<br/>
+           • <code>QuantModelHUD.tsx</code> — statistical summary panel (regression stats, signal counts, model metadata)<br/>
+           • <code>QuantScatterCanvas.tsx</code> — custom Canvas2D renderer; handles OLS line, quadrant crosshairs, point hover/click, sector filter, search filter<br/>
+           • <code>QuantWatchlistTable.tsx</code> — sortable table of all stocks in the active model with flags, sector filter, and search; clicking a row syncs the scatter canvas selection</p>
+      </div>
+    </div>
+    <div class="callout callout-green fade-in">
+      <strong>Trading Workflow:</strong> For swing trading, the MTF heatmap quickly surfaces which sectors are moving today. Switching to Quant → Residual Momentum shows which specific stocks are breaking out beyond what their sector's trend explains. Combining all 5 models gives a multi-dimensional view of the opportunity set in under 2 minutes.
+    </div>
+  </div>
+
+  <!-- 8. Automation -->
   <div class="section fade-in" id="automation">
     <div class="section-header">
       <div class="section-icon orange">⚙️</div>
@@ -650,17 +776,17 @@
         <div class="sched-row">
           <div class="sched-time">3:40 PM</div>
           <span class="tag tag-green">IST</span>
-          <div class="sched-desc"><strong>Post-Market Close Update</strong> — cron <code>10 10 * * 1-5</code> (10:10 UTC)<br/>Runs 10 minutes after NSE closes. Captures final closing prices.</div>
+          <div class="sched-desc"><strong>Post-Market Close Update</strong> — cron <code>10 10 * * 1-5</code> (10:10 UTC)<br/>Runs 10 minutes after NSE closes. Captures final closing prices and computes all quant model outputs.</div>
         </div>
       </div>
     </div>
     <div class="card fade-in">
-      <div class="card-title">🔁 GitHub Actions Workflow — 5 Steps</div>
+      <div class="card-title">🔁 GitHub Actions Workflow — 6 Steps</div>
       <div class="card-body">
         <div class="timeline">
           <div class="tl-item">
             <div class="tl-dot">1</div>
-            <div class="tl-content"><div class="tl-title">Checkout Repository</div><div class="tl-body">Uses <code>actions/checkout@v4</code> to clone the full repo onto the GitHub-hosted runner.</div></div>
+            <div class="tl-content"><div class="tl-title">Checkout Repository</div><div class="tl-body">Uses <code>actions/checkout@v4</code> to clone the full repo onto the runner.</div></div>
           </div>
           <div class="tl-item">
             <div class="tl-dot">2</div>
@@ -668,63 +794,94 @@
           </div>
           <div class="tl-item">
             <div class="tl-dot">3</div>
-            <div class="tl-content"><div class="tl-title">Install Dependencies</div><div class="tl-body">Installs <code>yfinance</code>, <code>pandas</code>, and <code>requests</code>. Fast install thanks to pip cache.</div></div>
+            <div class="tl-content"><div class="tl-title">Install Dependencies</div><div class="tl-body">Installs <code>yfinance</code>, <code>pandas</code>, <code>numpy</code>, and <code>requests</code>. <code>numpy</code> is required for quant model computation (Hurst exponent, OLS regression, Mahalanobis distance).</div></div>
           </div>
           <div class="tl-item">
             <div class="tl-dot">4</div>
-            <div class="tl-content"><div class="tl-title">Execute build_indices.py</div><div class="tl-body">Runs the full data pipeline: load cache → fetch new data → compute indices → write JSON files to <code>data/</code>.</div></div>
+            <div class="tl-content"><div class="tl-title">Execute build_indices.py --watchlist all</div><div class="tl-body">Processes both watchlists: loads cache → fetches new OHLCV → computes 14 indices + 5 quant models × 2 watchlists → writes all JSON files to <code>data/</code>.</div></div>
           </div>
           <div class="tl-item">
             <div class="tl-dot">5</div>
-            <div class="tl-content"><div class="tl-title">Commit &amp; Push Changes</div><div class="tl-body">Stages only the <code>data/</code> folder. Uses <code>git diff --staged --quiet</code> to skip commit if nothing changed. Commit message includes <code>[skip ci]</code> to prevent infinite CI loops.</div></div>
+            <div class="tl-content"><div class="tl-title">Sync data/ → public/data/ (excluding history.json)</div><div class="tl-body">Copies all generated JSONs (except the large history cache) to <code>public/data/</code> so Vite's build can serve them. <code>history.json</code> is excluded to keep the bundle small.</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">6</div>
+            <div class="tl-content"><div class="tl-title">Commit &amp; Push Changes</div><div class="tl-body">Stages <code>data/</code> and <code>public/data/</code> folders. Uses <code>git diff --staged --quiet</code> to skip commit if nothing changed (market holiday). Commit message includes <code>[skip ci]</code> to prevent infinite CI loops.</div></div>
           </div>
         </div>
       </div>
     </div>
     <div class="callout callout-green fade-in">
-      <strong>Zero Cost Automation:</strong> GitHub Actions gives 2,000 free minutes/month. Each run takes ~2 minutes. 2 runs/day × 22 market days = ~88 minutes/month — under 5% of the free quota.
+      <strong>Zero Cost Automation:</strong> GitHub Actions gives 2,000 free minutes/month. Each run takes ~3–4 minutes (both watchlists). 2 runs/day × 22 market days = ~176 minutes/month — under 9% of the free quota.
     </div>
   </div>
 
-  <!-- 7. Frontend -->
+  <!-- 9. Frontend -->
   <div class="section fade-in" id="frontend">
     <div class="section-header">
       <div class="section-icon blue">🖥️</div>
-      <div><div class="section-title">Frontend Dashboard</div><div class="section-subtitle">The ultra-premium dark-themed HTML/JS dashboard</div></div>
+      <div><div class="section-title">Frontend Architecture</div><div class="section-subtitle">React 18 + Vite + TypeScript — component tree and data flow</div></div>
     </div>
     <div class="card fade-in">
-      <div class="card-title">🏗️ Architecture</div>
+      <div class="card-title">🏗️ Technology Migration</div>
       <div class="card-body">
-        <p>The entire frontend is a <strong>single HTML file</strong> (<code>index.html</code>, ~68KB) with embedded CSS and JavaScript. No build step, no bundler, no framework. On page load, the JS fetches all required JSON files in parallel using <code>Promise.all()</code>, then renders each component.</p>
-      </div>
-    </div>
-    <div class="grid-3 fade-in">
-      <div class="card">
-        <div class="card-title">📈 Chart View</div>
-        <div class="card-body"><p>Powered by <strong>TradingView Lightweight Charts v5</strong>. Renders candlestick + volume. Toggle between Candle mode and Line mode. Fully interactive zoom, scroll, crosshair.</p></div>
-      </div>
-      <div class="card">
-        <div class="card-title">🟩 Heatmap View</div>
-        <div class="card-body"><p>Rendered on a <strong>Canvas element</strong> via D3-hierarchy. Includes 6-timeframe toggle and hover tooltips.</p></div>
-      </div>
-      <div class="card">
-        <div class="card-title">📋 Table View</div>
-        <div class="card-body"><p>Sortable, searchable table of all 132 stocks showing multi-timeframe performance. Live search filters on every keystroke.</p></div>
+        <p>The frontend has been fully migrated from a vanilla HTML/JS single-file to a <strong>Vite + React 18 + TypeScript</strong> application. This enables:</p>
+        <p>• <strong>Type-safe data contracts</strong> — all JSON shapes modelled in <code>src/types/index.ts</code><br/>
+           • <strong>React hooks</strong> for data fetching (<code>useIndexData</code>, <code>useQuantData</code>)<br/>
+           • <strong>Hot Module Replacement</strong> during development<br/>
+           • <strong>Production build</strong> via <code>npm run build</code> → Cloudflare Pages auto-deploys from the <code>dist/</code> output<br/>
+           • <strong>Tailwind CSS</strong> utility classes for styling</p>
       </div>
     </div>
     <div class="card fade-in">
-      <div class="card-title">⚡ Lightweight Charts v5 — Breaking API Change</div>
+      <div class="card-title">📁 Component Tree</div>
       <div class="card-body">
-        <p>TradingView made a breaking change in v5. Old API (throws errors in v5):</p>
-        <div class="code-block" style="margin-top:8px;color:#fca5a5;">chart.addCandlestickSeries({ ... }) // DEPRECATED in v5</div>
-        <p style="margin-top:12px;">Correct v5 API used in this project:</p>
-        <div class="code-block" style="margin-top:8px;color:#86efac;">chart.addSeries(LightweightCharts.CandlestickSeries, { ... }) // v5</div>
-        <p style="margin-top:12px;">Our implementation wraps both in a compatibility layer that detects which API is available.</p>
+        <div class="code-block" style="color:#a5b4fc;">App.tsx                          ← root: watchlist + view state
+├── Navbar.tsx                    ← brand, watchlist toggle, view switcher, status
+├── [view === 'chart']
+│   ├── SectorPills.tsx           ← horizontal sector/index selector chips
+│   ├── MetricHUD.tsx             ← OHLC stats, 52w range, all-time return
+│   ├── LightweightChart.tsx      ← TradingView Lightweight Charts v5 wrapper
+│   ├── ChartToolbar.tsx          ← timeframe + candle/line mode toggle
+│   ├── CrosshairHUD.tsx          ← live crosshair OHLC overlay
+│   └── ConstituentsTable.tsx     ← sortable/searchable stock table
+├── [view === 'heatmap']
+│   ├── HeatmapControls.tsx       ← timeframe, sector, search, filter, mode toggles
+│   └── HeatmapCanvas.tsx         ← D3 squarified treemap on Canvas
+└── [view === 'quant']
+    └── QuantDashboard.tsx
+        ├── QuantModelTabs.tsx    ← 5-model tab selector with signal badges
+        ├── QuantModelHUD.tsx     ← regression stats, signal counts
+        ├── QuantScatterCanvas.tsx ← custom Canvas2D scatter + OLS overlay
+        └── QuantWatchlistTable.tsx ← flagged stocks table with sector filter</div>
+      </div>
+    </div>
+    <div class="grid-2 fade-in">
+      <div class="card">
+        <div class="card-title">🔗 Data Hooks</div>
+        <div class="card-body">
+          <p><code>useIndexData(watchlist)</code> — fetches either:<br/>
+             • Investment: <code>indices_summary.json</code> + <code>heatmap_data.json</code> in parallel<br/>
+             • MTF: <code>mtf_heatmap_data.json</code> only (no summary needed)</p>
+          <p><code>useQuantData(watchlist)</code> — fetches either:<br/>
+             • Investment: <code>quant_models.json</code><br/>
+             • MTF: <code>mtf_quant_models.json</code></p>
+          <p>Both hooks auto-refresh when the <code>watchlist</code> prop changes via <code>useEffect</code> dependency on the <code>refresh</code> callback.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ LightweightCharts v5 API</div>
+        <div class="card-body">
+          <p>TradingView made a breaking change in v5. Old API:</p>
+          <div class="code-block" style="margin-top:8px;color:#fca5a5;font-size:11px;">chart.addCandlestickSeries({}) // REMOVED in v5</div>
+          <p style="margin-top:10px;">Correct v5 API used in this project:</p>
+          <div class="code-block" style="margin-top:8px;color:#86efac;font-size:11px;">chart.addSeries(CandlestickSeries, {}) // v5</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 8. File Structure -->
+  <!-- 10. File Structure -->
   <div class="section fade-in" id="files">
     <div class="section-header">
       <div class="section-icon cyan">📁</div>
@@ -732,37 +889,63 @@
     </div>
     <div class="file-tree fade-in">
 <span class="ft-dir">The Ultimate Dashboard/</span>
-├── <span class="ft-html">index.html</span>                       <span class="ft-comment"># Entire frontend — charts, heatmap, table</span>
-├── <span class="ft-py">build_indices.py</span>                  <span class="ft-comment"># Data pipeline — ingest, compute, export</span>
-├── <span class="ft-json">Stocks List.json</span>                  <span class="ft-comment"># 132 stocks: name, ticker, sector, exchange</span>
-├── <span class="ft-md">Project Plan.md</span>                   <span class="ft-comment"># Original project spec and requirements</span>
+├── <span class="ft-html">index.html</span>                        <span class="ft-comment"># Vite entry point (references src/main.tsx)</span>
+├── <span class="ft-py">build_indices.py</span>                   <span class="ft-comment"># Data pipeline — ingest, compute, export both watchlists</span>
+├── <span class="ft-json">Stocks List.json</span>                   <span class="ft-comment"># 132 investment stocks: name, ticker, sector, exchange</span>
+├── <span class="ft-json">MTF Stocks.json</span>                    <span class="ft-comment"># 216 MTF swing-trading stocks (≥3.5x margin)</span>
+├── <span class="ft-html">system_docs.html</span>                   <span class="ft-comment"># This document — system architecture reference</span>
+├── <span class="ft-json">package.json</span>                       <span class="ft-comment"># npm deps: react, vite, typescript, tailwindcss, etc.</span>
+├── <span class="ft-ts">tailwind.config.ts</span>                 <span class="ft-comment"># Tailwind CSS configuration</span>
+├── <span class="ft-ts">vite.config.ts</span>                     <span class="ft-comment"># Vite build configuration</span>
+│
+├── <span class="ft-dir">src/</span>                               <span class="ft-comment"># React application source</span>
+│   ├── <span class="ft-tsx">main.tsx</span>                       <span class="ft-comment"># React root mount point</span>
+│   ├── <span class="ft-tsx">App.tsx</span>                        <span class="ft-comment"># Root component — all state lives here</span>
+│   ├── <span class="ft-css">index.css</span>                      <span class="ft-comment"># Global styles + Tailwind imports</span>
+│   ├── <span class="ft-dir">types/</span>
+│   │   └── <span class="ft-ts">index.ts</span>                   <span class="ft-comment"># All TypeScript types (IndexMeta, HeatmapData, QuantData...)</span>
+│   ├── <span class="ft-dir">hooks/</span>
+│   │   ├── <span class="ft-ts">useIndexData.ts</span>            <span class="ft-comment"># Watchlist-aware data fetching for heatmap + index summary</span>
+│   │   └── <span class="ft-ts">useQuantData.ts</span>            <span class="ft-comment"># Watchlist-aware data fetching for quant model JSONs</span>
+│   ├── <span class="ft-dir">utils/</span>
+│   │   └── <span class="ft-ts">formatters.ts</span>              <span class="ft-comment"># Date/number formatting utilities</span>
+│   └── <span class="ft-dir">components/</span>
+│       ├── <span class="ft-tsx">Navbar.tsx</span>                 <span class="ft-comment"># Brand + watchlist toggle + centered view switcher + status</span>
+│       ├── <span class="ft-tsx">SectorPills.tsx</span>            <span class="ft-comment"># Horizontal index selector (investment mode only)</span>
+│       ├── <span class="ft-tsx">MetricHUD.tsx</span>              <span class="ft-comment"># OHLC stats, 52w range, all-time return cards</span>
+│       ├── <span class="ft-tsx">LightweightChart.tsx</span>       <span class="ft-comment"># TradingView Lightweight Charts v5 React wrapper</span>
+│       ├── <span class="ft-tsx">ChartToolbar.tsx</span>           <span class="ft-comment"># Candle/Line toggle + timeframe selector</span>
+│       ├── <span class="ft-tsx">CrosshairHUD.tsx</span>           <span class="ft-comment"># Live OHLC display on chart hover</span>
+│       ├── <span class="ft-tsx">ConstituentsTable.tsx</span>      <span class="ft-comment"># Sortable/searchable stock table for index view</span>
+│       ├── <span class="ft-tsx">HeatmapControls.tsx</span>        <span class="ft-comment"># All heatmap filter controls</span>
+│       ├── <span class="ft-tsx">HeatmapCanvas.tsx</span>          <span class="ft-comment"># D3-hierarchy Canvas treemap renderer</span>
+│       ├── <span class="ft-tsx">HeatmapTooltip.tsx</span>         <span class="ft-comment"># Heatmap hover tooltip</span>
+│       ├── <span class="ft-tsx">Footer.tsx</span>                 <span class="ft-comment"># Last updated timestamp footer</span>
+│       └── <span class="ft-dir">quant/</span>
+│           ├── <span class="ft-tsx">QuantDashboard.tsx</span>     <span class="ft-comment"># Quant view root — model selection + data orchestration</span>
+│           ├── <span class="ft-tsx">QuantModelTabs.tsx</span>     <span class="ft-comment"># 5-tab model selector with live badge counts</span>
+│           ├── <span class="ft-tsx">QuantModelHUD.tsx</span>      <span class="ft-comment"># Stats panel for the active model</span>
+│           ├── <span class="ft-tsx">QuantScatterCanvas.tsx</span> <span class="ft-comment"># Custom Canvas2D scatter plot + OLS overlay</span>
+│           └── <span class="ft-tsx">QuantWatchlistTable.tsx</span> <span class="ft-comment"># Signal flagged-stocks table</span>
 │
 ├── <span class="ft-dir">.github/workflows/</span>
-│   └── <span class="ft-yml">update_indices.yml</span>            <span class="ft-comment"># GitHub Actions cron automation</span>
+│   └── <span class="ft-yml">update_indices.yml</span>             <span class="ft-comment"># GitHub Actions cron: runs build_indices.py twice daily</span>
 │
-└── <span class="ft-dir">data/</span>                            <span class="ft-comment"># Auto-generated by build_indices.py</span>
-    ├── <span class="ft-json">history.json</span>                  <span class="ft-comment"># Delta cache: full raw OHLCV for 132 stocks</span>
-    ├── <span class="ft-json">master_index.json</span>             <span class="ft-comment"># Combined OHLC series (all stocks)</span>
-    ├── <span class="ft-json">indices_summary.json</span>          <span class="ft-comment"># Sector list with current values &amp; % changes</span>
-    ├── <span class="ft-json">heatmap_data.json</span>             <span class="ft-comment"># D3 hierarchy for treemap (all timeframes)</span>
-    ├── <span class="ft-json">stocks_summary.json</span>           <span class="ft-comment"># Per-stock metadata + multi-timeframe returns</span>
-    ├── <span class="ft-json">sector_it_tech_services.json</span>
-    ├── <span class="ft-json">sector_financial_services.json</span>
-    ├── <span class="ft-json">sector_pharmaceuticals_healthcare.json</span>
-    ├── <span class="ft-json">sector_defense_aerospace.json</span>
-    ├── <span class="ft-json">sector_capital_goods_engineering.json</span>
-    ├── <span class="ft-json">sector_chemicals_materials.json</span>
-    ├── <span class="ft-json">sector_auto_ancillaries.json</span>
-    ├── <span class="ft-json">sector_consumer_goods_retail.json</span>
-    ├── <span class="ft-json">sector_infrastructure_construction.json</span>
-    ├── <span class="ft-json">sector_real_estate_realty.json</span>
-    ├── <span class="ft-json">sector_electronics_consumer_durables.json</span>
-    ├── <span class="ft-json">sector_logistics_services.json</span>
-    └── <span class="ft-json">sector_renewable_energy_utilities.json</span>
+├── <span class="ft-dir">data/</span>                              <span class="ft-comment"># Auto-generated by build_indices.py (gitignored for large files)</span>
+│   ├── <span class="ft-json">history.json</span>                   <span class="ft-comment"># Delta cache: raw OHLCV for all 348 stocks (NOT in public/)</span>
+│   ├── <span class="ft-json">indices_summary.json</span>           <span class="ft-comment"># Investment: 14 indices with metadata + constituents</span>
+│   ├── <span class="ft-json">heatmap_data.json</span>              <span class="ft-comment"># Investment: D3 hierarchy + multi-timeframe returns</span>
+│   ├── <span class="ft-json">quant_models.json</span>              <span class="ft-comment"># Investment: 5 quant model outputs</span>
+│   ├── <span class="ft-json">mtf_heatmap_data.json</span>          <span class="ft-comment"># MTF: D3 hierarchy treemap data</span>
+│   ├── <span class="ft-json">mtf_quant_models.json</span>          <span class="ft-comment"># MTF: 5 quant model outputs for 216 stocks</span>
+│   └── <span class="ft-json">sector_*.json</span> × 13            <span class="ft-comment"># Per-sector OHLC series for index chart</span>
+│
+└── <span class="ft-dir">public/data/</span>                       <span class="ft-comment"># Synced subset of data/ (consumed by Vite dev + Cloudflare)</span>
+    <span class="ft-comment"># Same files as data/ except history.json</span>
     </div>
   </div>
 
-  <!-- 9. Tech Stack -->
+  <!-- 11. Tech Stack -->
   <div class="section fade-in" id="stack">
     <div class="section-header">
       <div class="section-icon purple">🛠️</div>
@@ -774,67 +957,102 @@
     <div class="tech-grid fade-in">
       <div class="tech-card"><div class="tc-icon">🐍</div><div><div class="tc-name">Python 3.11</div><div class="tc-role">Core scripting language for the entire data pipeline</div><div class="tc-version">v3.11</div></div></div>
       <div class="tech-card"><div class="tc-icon">📊</div><div><div class="tc-name">yfinance</div><div class="tc-role">Yahoo Finance API wrapper for downloading OHLCV data</div><div class="tc-version">latest</div></div></div>
-      <div class="tech-card"><div class="tc-icon">🐼</div><div><div class="tc-name">pandas</div><div class="tc-role">DataFrame operations, date alignment, resampling</div><div class="tc-version">latest</div></div></div>
-      <div class="tech-card"><div class="tc-icon">📦</div><div><div class="tc-name">json (stdlib)</div><div class="tc-role">Serializing computed data into static JSON output files</div><div class="tc-version">built-in</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🐼</div><div><div class="tc-name">pandas</div><div class="tc-role">DataFrame operations, date alignment, return computation</div><div class="tc-version">latest</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🔢</div><div><div class="tc-name">numpy</div><div class="tc-role">OLS regression, Hurst exponent, Mahalanobis distance for quant models</div><div class="tc-version">latest</div></div></div>
     </div>
 
-    <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Frontend / Visualization</div>
+    <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Frontend / Framework</div>
     <div class="tech-grid fade-in">
-      <div class="tech-card"><div class="tc-icon">📈</div><div><div class="tc-name">TradingView Lightweight Charts</div><div class="tc-role">High-performance candlestick &amp; line chart rendering</div><div class="tc-version">v5.0</div></div></div>
-      <div class="tech-card"><div class="tc-icon">📐</div><div><div class="tc-name">D3-hierarchy</div><div class="tc-role">Squarified treemap layout algorithm for the heatmap</div><div class="tc-version">v7.x</div></div></div>
-      <div class="tech-card"><div class="tc-icon">🌐</div><div><div class="tc-name">Vanilla HTML/CSS/JS</div><div class="tc-role">Zero framework overhead. No bundler. No build step.</div><div class="tc-version">ES2022</div></div></div>
-      <div class="tech-card"><div class="tc-icon">🎨</div><div><div class="tc-name">Google Fonts</div><div class="tc-role">Inter, Space Grotesk, JetBrains Mono typography</div><div class="tc-version">CDN</div></div></div>
+      <div class="tech-card"><div class="tc-icon">⚛️</div><div><div class="tc-name">React 18</div><div class="tc-role">Component tree, hooks, state management for the dashboard</div><div class="tc-version">v18</div></div></div>
+      <div class="tech-card"><div class="tc-icon">⚡</div><div><div class="tc-name">Vite</div><div class="tc-role">Build tool + dev server. Lightning-fast HMR during development</div><div class="tc-version">v5</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🔷</div><div><div class="tc-name">TypeScript</div><div class="tc-role">Full type safety across components, hooks, and JSON shapes</div><div class="tc-version">v5</div></div></div>
+      <div class="tech-card"><div class="tc-icon">💨</div><div><div class="tc-name">Tailwind CSS</div><div class="tc-role">Utility-first CSS framework for all component styling</div><div class="tc-version">v3</div></div></div>
+    </div>
+
+    <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Visualization Libraries</div>
+    <div class="tech-grid fade-in">
+      <div class="tech-card"><div class="tc-icon">📈</div><div><div class="tc-name">TradingView Lightweight Charts</div><div class="tc-role">High-performance candlestick &amp; line chart rendering (Index Chart view)</div><div class="tc-version">v5.0</div></div></div>
+      <div class="tech-card"><div class="tc-icon">📐</div><div><div class="tc-name">D3-hierarchy</div><div class="tc-role">Squarified treemap layout algorithm for the Heatmap view</div><div class="tc-version">v7.x</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🎨</div><div><div class="tc-name">Canvas API</div><div class="tc-role">Custom scatter plot renderer in QuantScatterCanvas.tsx — no chart lib dependency</div><div class="tc-version">Native</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🖋️</div><div><div class="tc-name">Google Fonts</div><div class="tc-role">Inter, Space Grotesk, JetBrains Mono typography</div><div class="tc-version">CDN</div></div></div>
     </div>
 
     <div style="margin:24px 0 12px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Automation &amp; Deployment</div>
     <div class="tech-grid fade-in">
-      <div class="tech-card"><div class="tc-icon">⚙️</div><div><div class="tc-name">GitHub Actions</div><div class="tc-role">Cron-based CI/CD. Runs build_indices.py twice daily.</div><div class="tc-version">ubuntu-latest</div></div></div>
-      <div class="tech-card"><div class="tc-icon">☁️</div><div><div class="tc-name">Cloudflare Pages</div><div class="tc-role">Global CDN hosting. Auto-deploys on every git push.</div><div class="tc-version">Free tier</div></div></div>
-      <div class="tech-card"><div class="tc-icon">🐙</div><div><div class="tc-name">GitHub</div><div class="tc-role">Version control + static data store (JSON as database)</div><div class="tc-version">Free tier</div></div></div>
+      <div class="tech-card"><div class="tc-icon">⚙️</div><div><div class="tc-name">GitHub Actions</div><div class="tc-role">Cron-based CI/CD. Runs build_indices.py twice daily on Mon–Fri</div><div class="tc-version">ubuntu-latest</div></div></div>
+      <div class="tech-card"><div class="tc-icon">☁️</div><div><div class="tc-name">Cloudflare Pages</div><div class="tc-role">Global CDN hosting. Auto-deploys Vite dist/ on every git push to main</div><div class="tc-version">Free tier</div></div></div>
+      <div class="tech-card"><div class="tc-icon">🐙</div><div><div class="tc-name">GitHub</div><div class="tc-role">Version control + static data store. JSON files serve as the "database"</div><div class="tc-version">Free tier</div></div></div>
       <div class="tech-card"><div class="tc-icon">💰</div><div><div class="tc-name">Total Monthly Cost</div><div class="tc-role">100% free-tier. No credit card required. $0 forever.</div><div class="tc-version">$0.00 / mo</div></div></div>
     </div>
   </div>
 
-  <!-- 10. How to Run -->
+  <!-- 12. How to Run -->
   <div class="section fade-in" id="howto">
     <div class="section-header">
       <div class="section-icon green">🚀</div>
-      <div><div class="section-title">How to Run Locally</div><div class="section-subtitle">Get the pipeline running on your machine in minutes</div></div>
+      <div><div class="section-title">How to Run Locally</div><div class="section-subtitle">Get the full pipeline + dashboard running on your machine</div></div>
     </div>
     <div class="card fade-in">
       <div class="card-title">Step 1 — Install Python Dependencies</div>
       <div class="code-block" style="color:#a5b4fc;"># Create a virtual environment (recommended)
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 # Install required packages
-pip install yfinance pandas requests</div>
+pip install yfinance pandas numpy requests</div>
     </div>
     <div class="card fade-in">
       <div class="card-title">Step 2 — Run the Data Pipeline</div>
-      <div class="code-block" style="color:#a5b4fc;"># First run: fetches ~1 year of history for all 132 stocks
-# Takes 5-15 mins due to rate limiting (1.5-3s per stock)
-python build_indices.py
+      <div class="code-block" style="color:#a5b4fc;"># Process both watchlists (recommended, matches CI behavior)
+python build_indices.py --watchlist all
 
-# Subsequent runs are fast — delta only (new days only) ~1-2 minutes</div>
+# Or process only one watchlist:
+python build_indices.py --watchlist investment
+python build_indices.py --watchlist mtf
+
+# First run fetches ~1 year of history for all stocks
+# Takes 15-30 mins due to rate limiting (1.5-3s per stock)
+# Subsequent runs are fast — delta only (new days) ~2-4 minutes</div>
     </div>
     <div class="card fade-in">
-      <div class="card-title">Step 3 — Serve the Dashboard</div>
-      <div class="code-block" style="color:#a5b4fc;"># Use Python's built-in HTTP server (avoids CORS issues with local JSON)
-python3 -m http.server 8080
+      <div class="card-title">Step 3 — Sync data/ to public/data/</div>
+      <div class="code-block" style="color:#a5b4fc;"># The React dev server serves files from public/
+# Copy generated JSONs (exclude the large history cache)
+rsync -av --exclude="history.json" data/ public/data/
 
-# Open in your browser
-open http://localhost:8080</div>
+# On Windows (PowerShell):
+# robocopy data public\data /XF history.json /E</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">Step 4 — Start the React Dev Server</div>
+      <div class="code-block" style="color:#a5b4fc;"># Install Node.js dependencies (first time only)
+npm install
+
+# Start the Vite dev server with HMR
+npm run dev
+
+# Opens at: http://localhost:5173</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">Step 5 — Build for Production (Optional)</div>
+      <div class="code-block" style="color:#a5b4fc;"># Build the optimized production bundle
+npm run build
+
+# Preview the production build locally
+npm run preview
+
+# The dist/ folder is what Cloudflare Pages deploys automatically
+# on every git push to main.</div>
     </div>
     <div class="callout callout-yellow fade-in">
-      <strong>Why a local server?</strong> The dashboard fetches JSON via <code>fetch()</code> which requires HTTP. Opening <code>index.html</code> directly as a <code>file://</code> URL triggers CORS errors and charts won't load.
+      <strong>Note on data/ vs public/data/:</strong> <code>build_indices.py</code> writes to <code>data/</code> (your local cache). The React app reads from <code>public/data/</code> in development and <code>/data/</code> at runtime in production (served from Cloudflare Pages). Always sync after running the pipeline locally.
     </div>
   </div>
 
   <div class="footer fade-in">
-    <p><strong>The Ultimate Indian Market Dashboard</strong></p>
-    <p style="margin-top:8px;">Built with Python · TradingView Lightweight Charts · D3 · GitHub Actions · Cloudflare Pages</p>
-    <p style="margin-top:6px;">Architecture: JAMstack &nbsp;·&nbsp; Data: Yahoo Finance via yfinance &nbsp;·&nbsp; Cost: $0/month</p>
+    <p><strong>The Ultimate Indian Market Terminal</strong></p>
+    <p style="margin-top:8px;">Built with Python · React 18 · Vite · TypeScript · TradingView Lightweight Charts · D3 · GitHub Actions · Cloudflare Pages</p>
+    <p style="margin-top:6px;">Architecture: JAMstack &nbsp;·&nbsp; Data: Yahoo Finance via yfinance &nbsp;·&nbsp; Cost: $0/month &nbsp;·&nbsp; Doc Version: v2.0</p>
   </div>
 
 </div>

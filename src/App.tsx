@@ -62,6 +62,7 @@ export default function App() {
   const handleWatchlistChange = useCallback((newWatchlist: WatchlistId) => {
     setWatchlist(newWatchlist);
     setQuantSelectedTicker(null);
+    setHmScope('all');
     if (newWatchlist === 'mtf') {
       // MTF watchlist does not have an index chart; immediately switch to heatmap if on chart
       setView(prev => (prev === 'chart' ? 'heatmap' : prev));
@@ -186,6 +187,8 @@ export default function App() {
         {view === 'heatmap' && heatmapData && (
           <>
             <HeatmapControls
+              watchlist={watchlist}
+              totalStocks={heatmapData.total_stocks}
               timeframe={hmTf}
               scope={hmScope}
               search={hmSearch}

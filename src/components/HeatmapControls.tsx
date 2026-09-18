@@ -1,9 +1,11 @@
-import type { HeatmapTimeframe, HeatmapSector, HeatmapHierarchyMode, HeatmapSizingMode } from '../types';
+import type { HeatmapTimeframe, HeatmapSector, HeatmapHierarchyMode, HeatmapSizingMode, WatchlistId } from '../types';
 import { getLegendEntries } from '../utils/heatmapColors';
 
 const HM_TF: HeatmapTimeframe[] = ['1d', '1w', '1m', '3m', '6m', '1y'];
 
 interface HeatmapControlsProps {
+  watchlist?: WatchlistId;
+  totalStocks?: number;
   timeframe: HeatmapTimeframe;
   scope: string;
   search: string;
@@ -20,6 +22,8 @@ interface HeatmapControlsProps {
 }
 
 export default function HeatmapControls({
+  watchlist = 'investment',
+  totalStocks,
   timeframe,
   scope,
   search,
@@ -35,6 +39,9 @@ export default function HeatmapControls({
   onToggleSizing,
 }: HeatmapControlsProps) {
   const legend = getLegendEntries(timeframe);
+  const allLabel = watchlist === 'mtf'
+    ? `All MTF Stocks (${totalStocks ?? 216} Stocks)`
+    : `All Indices (${totalStocks ?? 132} Master Basket)`;
 
   return (
     <section className="terminal-card rounded-lg p-3 sm:p-3.5 border border-zinc-800 bg-[#121215]/90">
@@ -47,7 +54,7 @@ export default function HeatmapControls({
               onChange={e => onScope(e.target.value)}
               className="appearance-none text-xs font-mono font-medium py-1.5 px-2.5 pr-7 rounded-md bg-zinc-900 border border-zinc-700/70 text-zinc-200 cursor-pointer hover:border-zinc-500 focus:outline-none transition"
             >
-              <option value="all">All Indices (132 Master Basket)</option>
+              <option value="all">{allLabel}</option>
               {sectors.map(s => (
                 <option key={s.slug} value={s.slug}>{s.name} ({s.constituents_count})</option>
               ))}
