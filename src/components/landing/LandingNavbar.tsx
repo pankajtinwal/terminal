@@ -6,9 +6,9 @@ interface LandingNavbarProps {
 export default function LandingNavbar({ onLaunchTerminal, onOpenAuth }: LandingNavbarProps) {
   return (
     <header className="sticky top-0 z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-zinc-800/80">
-      <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 h-16 relative flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand & Market Status Pill */}
-        <div className="flex items-center gap-3.5 z-10">
+        <div className="flex items-center gap-3.5">
           <div className="flex items-center gap-2.5 cursor-pointer" onClick={onLaunchTerminal}>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
               <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
@@ -29,8 +29,8 @@ export default function LandingNavbar({ onLaunchTerminal, onOpenAuth }: LandingN
           </div>
         </div>
 
-        {/* Center Nav Links (Mathematically Dead-Centered) */}
-        <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-7 text-xs font-mono text-zinc-400 z-10">
+        {/* Center Nav Links */}
+        <nav className="hidden md:flex items-center gap-7 text-xs font-mono text-zinc-400">
           <a href="#features" className="hover:text-zinc-100 transition">Features</a>
           <a href="#quant" className="hover:text-zinc-100 transition">Quant Models</a>
           <a href="#mtf" className="hover:text-zinc-100 transition">MTF Radar</a>
@@ -39,7 +39,7 @@ export default function LandingNavbar({ onLaunchTerminal, onOpenAuth }: LandingN
         </nav>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3 z-10">
+        <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => onOpenAuth('login')}
