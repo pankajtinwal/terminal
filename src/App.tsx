@@ -158,9 +158,6 @@ export default function App() {
       <Navbar
         watchlist={watchlist}
         onWatchlistChange={handleWatchlistChange}
-        onRefresh={refresh}
-        loading={loading}
-        cacheStatus={cacheStatus}
         onGoHome={handleGoHome}
       />
 

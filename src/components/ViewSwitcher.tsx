@@ -39,7 +39,7 @@ export default function ViewSwitcher({
           <button
             type="button"
             onClick={() => onViewChange('chart')}
-            title="Switch to Index Candlestick Chart (Shortcut: 1)"
+            title="Switch to Index Candlestick Chart"
             className={`flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono font-semibold transition cursor-pointer ${
               view === 'chart'
                 ? 'bg-zinc-800 text-white border border-zinc-700 shadow-xs'
@@ -51,14 +51,13 @@ export default function ViewSwitcher({
               <polyline points="16 7 22 7 22 13" />
             </svg>
             <span>Index Chart</span>
-            <span className="hidden lg:inline text-[10px] px-1 rounded bg-zinc-900 text-zinc-500 font-normal">1</span>
           </button>
         )}
 
         <button
           type="button"
           onClick={() => onViewChange('heatmap')}
-          title="Switch to Market Treemap Heatmap (Shortcut: 2)"
+          title="Switch to Market Treemap Heatmap"
           className={`flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono font-semibold transition cursor-pointer ${
             view === 'heatmap'
               ? 'bg-zinc-800 text-white border border-zinc-700 shadow-xs'
@@ -70,13 +69,12 @@ export default function ViewSwitcher({
             <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
           </svg>
           <span>Market Treemap</span>
-          <span className="hidden lg:inline text-[10px] px-1 rounded bg-zinc-900 text-zinc-500 font-normal">2</span>
         </button>
 
         <button
           type="button"
           onClick={() => onViewChange('quant')}
-          title="Switch to Quantitative Alpha Models (Shortcut: 3)"
+          title="Switch to Quantitative Alpha Models"
           className={`flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono font-semibold transition cursor-pointer ${
             view === 'quant'
               ? 'bg-zinc-800 text-white border border-zinc-700 shadow-xs'
@@ -91,7 +89,6 @@ export default function ViewSwitcher({
             <circle cx="5" cy="8" r="1.5" />
           </svg>
           <span>Quant Models</span>
-          <span className="hidden lg:inline text-[10px] px-1 rounded bg-zinc-900 text-zinc-500 font-normal">3</span>
         </button>
       </div>
 

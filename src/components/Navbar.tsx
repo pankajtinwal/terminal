@@ -3,9 +3,6 @@ import type { WatchlistId } from '../types';
 interface NavbarProps {
   watchlist: WatchlistId;
   onWatchlistChange: (w: WatchlistId) => void;
-  onRefresh: () => void;
-  loading: boolean;
-  cacheStatus: string;
   onGoHome?: () => void;
   onOpenProfile?: () => void;
 }
@@ -13,9 +10,6 @@ interface NavbarProps {
 export default function Navbar({
   watchlist,
   onWatchlistChange,
-  onRefresh,
-  loading,
-  cacheStatus,
   onGoHome,
   onOpenProfile,
 }: NavbarProps) {
@@ -84,28 +78,8 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Right: Cache Status, Refresh & User Profile Section */}
+        {/* Right: User Profile / Account Section */}
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-zinc-300 text-[11px] font-mono">
-            <span className={`w-1.5 h-1.5 rounded-full ${watchlist === 'mtf' ? 'bg-emerald-400 animate-pulse' : 'bg-emerald-400'}`} />
-            <span className="hidden sm:inline">{cacheStatus}</span>
-            <span className="sm:hidden">{watchlist === 'mtf' ? 'MTF' : '132'}</span>
-          </div>
-
-          <button
-            type="button"
-            onClick={onRefresh}
-            title="Re-sync data cache"
-            className="p-1.5 rounded-md bg-[#18181b] border border-[#27272a] text-zinc-400 hover:text-white hover:border-zinc-600 transition active:scale-95 cursor-pointer"
-          >
-            <svg className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-emerald-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </button>
-
-          <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
-
-          {/* User Profile / Account Section */}
           <button
             type="button"
             onClick={onOpenProfile}
