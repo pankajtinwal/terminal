@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1280, user-scalable=yes" id="viewport-meta" />
-    <script>
-      (function() {
-        // Enforce desktop layout on mobile devices (auto-scales 1280px desktop site to phone screen)
-        if (typeof window !== 'undefined' && window.screen && window.screen.width < 1280) {
-          var meta = document.getElementById('viewport-meta');
-          if (meta) {
-            var scale = (window.screen.width / 1280).toFixed(4);
-            meta.setAttribute('content', 'width=1280, initial-scale=' + scale + ', minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes');
-          }
-        }
-      })();
-    </script>
-    <title>ALPHA 132 | Indian Stock Custom Index Engine &amp; Heatmap Visualizer</title>
-    <meta name="description" content="Custom Equal-Weighted Index tracking, quantitative visualizer, and market treemap heatmap for 132 Indian stocks." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body class="bg-[#09090b] text-[#f4f4f5] antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALPHA 132 | Indian Stock Custom Index Engine &amp; Heatmap Visualizer</title>
+  <meta name="description"
+    content="Custom Equal-Weighted Index tracking, quantitative visualizer, and market treemap heatmap for 132 Indian stocks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body class="bg-[#09090b] text-[#f4f4f5] antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
