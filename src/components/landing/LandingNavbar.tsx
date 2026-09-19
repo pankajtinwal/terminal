@@ -18,7 +18,7 @@ export default function LandingNavbar({ onLaunchTerminal, onOpenAuth }: LandingN
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-bold tracking-widest font-mono text-white flex items-center gap-1.5">
-                TERMINAL <span className="text-[10px] font-normal px-1.5 py-0.2 rounded bg-zinc-800 text-emerald-400 border border-emerald-500/20 font-mono">ALPHA</span>
+                KOSHX <span className="text-[10px] font-normal px-1.5 py-0.2 rounded bg-zinc-800 text-emerald-400 border border-emerald-500/20 font-mono">QUANT</span>
               </span>
             </div>
           </div>

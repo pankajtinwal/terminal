@@ -26,8 +26,12 @@ import QuantDashboard from './components/quant/QuantDashboard';
 import Footer from './components/Footer';
 import LandingPage from './components/landing/LandingPage';
 import ViewSwitcher from './components/ViewSwitcher';
+import ProfileModal from './components/ProfileModal';
 
 export default function App() {
+  // Profile modal state
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+
   // Page state: landing vs terminal
   const [page, setPage] = useState<'landing' | 'terminal'>(() => {
     if (typeof window !== 'undefined') {
@@ -159,6 +163,7 @@ export default function App() {
         watchlist={watchlist}
         onWatchlistChange={handleWatchlistChange}
         onGoHome={handleGoHome}
+        onOpenProfile={() => setProfileModalOpen(true)}
       />
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4">
@@ -271,6 +276,11 @@ export default function App() {
       </main>
 
       <Footer lastUpdated={lastUpdated} />
+
+      <ProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
     </div>
   );
 }

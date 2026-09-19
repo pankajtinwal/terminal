@@ -15,7 +15,7 @@ export default function LandingFooter({ onLaunchTerminal }: LandingFooterProps) 
               </svg>
             </div>
             <span className="text-sm font-bold tracking-widest text-white uppercase">
-              TERMINAL QUANTITATIVE
+              KOSHX QUANTITATIVE
             </span>
           </div>
 
@@ -36,10 +36,10 @@ export default function LandingFooter({ onLaunchTerminal }: LandingFooterProps) 
 
         <div className="space-y-4 text-zinc-500 text-[11px] leading-relaxed">
           <p>
-            <strong className="text-zinc-400 font-semibold">Educational & Quantitative Analytics Disclaimer:</strong> The Terminal and its associated synthetic indices, treemaps, and mathematical models (EMA pullbacks, cross-sectional residual momentum, kinematic phase-space vectors, Ornstein-Uhlenbeck processes, and fractal Hurst regimes) are designed strictly for mathematical research, market structure analysis, and educational purposes. Nothing on this platform constitutes SEBI-registered investment advice or a solicitation to buy or sell securities.
+            <strong className="text-zinc-400 font-semibold">Educational & Quantitative Analytics Disclaimer:</strong> The KoshX Terminal and its associated synthetic indices, treemaps, and mathematical models (EMA pullbacks, cross-sectional residual momentum, kinematic phase-space vectors, Ornstein-Uhlenbeck processes, and fractal Hurst regimes) are designed strictly for mathematical research, market structure analysis, and educational purposes. Nothing on this platform constitutes SEBI-registered investment advice or a solicitation to buy or sell securities.
           </p>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-2 border-t border-zinc-900">
-            <p>© {new Date().getFullYear()} Terminal Quantitative. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} KoshX. All rights reserved.</p>
             <div className="flex items-center gap-4 text-zinc-500">
               <span>Cloudflare Edge Deployed</span>
               <span>•</span>

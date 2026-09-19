@@ -1,4 +1,5 @@
 import type { WatchlistId } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 interface NavbarProps {
   watchlist: WatchlistId;
@@ -13,6 +14,16 @@ export default function Navbar({
   onGoHome,
   onOpenProfile,
 }: NavbarProps) {
+  const { profile, subscription, isPro } = useAuth();
+  const initials = profile?.fullName
+    ? profile.fullName
+        .split(' ')
+        .map((p) => p[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+    : 'TR';
+
   return (
     <header className="sticky top-0 z-50 bg-[#121215] border-b border-[#27272a]">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 h-[52px] flex items-center justify-between">
@@ -30,7 +41,7 @@ export default function Navbar({
               </svg>
             </div>
             <span className="text-sm font-bold tracking-widest font-mono text-[#f4f4f5] uppercase hidden sm:inline">
-              TERMINAL
+              KOSHX
             </span>
           </div>
 
@@ -52,15 +63,15 @@ export default function Navbar({
             <button
               type="button"
               onClick={() => onWatchlistChange('investment')}
-              title="Alpha 132 Investment Watchlist (Equal-Weighted Index, Treemap, Quant)"
+              title="KoshX Core Investment Watchlist (Equal-Weighted Index, Treemap, Quant)"
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono transition cursor-pointer ${
                 watchlist === 'investment'
                   ? 'bg-[#1e2025] text-white font-medium border border-[#3f3f46]/80 shadow-xs'
                   : 'text-zinc-400 hover:text-zinc-200 border border-transparent'
               }`}
             >
-              <span>Alpha 132</span>
-              <span className="text-[10px] px-1 rounded bg-zinc-800 text-zinc-400 hidden lg:inline">Inv</span>
+              <span>KoshX Core</span>
+              <span className="text-[10px] px-1 rounded bg-zinc-800 text-zinc-400 hidden lg:inline">Core</span>
             </button>
             <button
               type="button"
@@ -87,14 +98,20 @@ export default function Navbar({
             className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-md bg-[#18181b] hover:bg-zinc-800/80 border border-[#27272a] hover:border-zinc-600 transition cursor-pointer group"
           >
             <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-[10px] font-mono font-bold">
-              PT
+              {initials}
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-mono font-medium text-zinc-200 group-hover:text-white hidden md:inline">
-                Pankaj
+                {profile?.fullName ? profile.fullName.split(' ')[0] : 'Account'}
               </span>
-              <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                PRO
+              <span
+                className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border uppercase ${
+                  isPro
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                    : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                }`}
+              >
+                {subscription.plan.toUpperCase()}
               </span>
             </div>
             <svg className="w-3 h-3 text-zinc-400 group-hover:text-zinc-200 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">

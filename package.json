@@ -1,5 +1,5 @@
 {
-  "name": "alpha-132-dashboard",
+  "name": "koshx-terminal",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.109.0",
     "d3-hierarchy": "^3.1.2",
     "lightweight-charts": "^5.0.3",
     "react": "^18.3.1",

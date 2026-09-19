@@ -8,7 +8,7 @@ export default function Footer({ lastUpdated }: FooterProps) {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          <span className="text-zinc-400">ALPHA 132 Synthetic Index Engine</span>
+          <span className="text-zinc-400">KOSHX Synthetic Index Engine</span>
           <span className="text-zinc-600">&bull;</span>
           <span className="text-zinc-500">Base 1000 Equal-Weight</span>
         </div>

@@ -26,7 +26,7 @@ export default function HeroSection({ onLaunchTerminal, onOpenAuth }: HeroSectio
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-            The Quantitative Intelligence Terminal for{' '}
+            KoshX: Quantitative Intelligence for{' '}
             <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
               Indian Equities
             </span>
@@ -71,7 +71,7 @@ export default function HeroSection({ onLaunchTerminal, onOpenAuth }: HeroSectio
             </div>
             <div className="p-2.5 rounded-lg bg-zinc-900/50 border border-zinc-800/80 text-center">
               <div className="text-xl font-mono font-bold text-cyan-400">132</div>
-              <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Alpha Core Basket</div>
+              <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">KoshX Core Basket</div>
             </div>
             <div className="p-2.5 rounded-lg bg-zinc-900/50 border border-zinc-800/80 text-center">
               <div className="text-xl font-mono font-bold text-purple-400">5</div>
@@ -92,7 +92,7 @@ export default function HeroSection({ onLaunchTerminal, onOpenAuth }: HeroSectio
               <span className="w-3 h-3 rounded-full bg-rose-500/80" />
               <span className="w-3 h-3 rounded-full bg-amber-500/80" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-              <span className="text-xs font-mono text-zinc-400 ml-2 hidden sm:inline">terminal.internal • v2.4.0</span>
+              <span className="text-xs font-mono text-zinc-400 ml-2 hidden sm:inline">koshx.terminal • v2.4.0</span>
             </div>
 
             {/* Preview Tab Toggles */}
@@ -243,7 +243,7 @@ export default function HeroSection({ onLaunchTerminal, onOpenAuth }: HeroSectio
             {activeTab === 'index' && (
               <div className="space-y-4 animate-fadeIn">
                 <div className="flex items-center justify-between text-xs font-mono text-zinc-400 pb-2 border-b border-zinc-800/80">
-                  <span className="text-zinc-200 font-semibold">Equal-Weighted Alpha 132 Synthetic Benchmark</span>
+                  <span className="text-zinc-200 font-semibold">Equal-Weighted KoshX Core Benchmark</span>
                   <span className="text-cyan-400">1/n Weighting • Rebalanced Daily</span>
                 </div>
 

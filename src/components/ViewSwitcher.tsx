@@ -98,7 +98,7 @@ export default function ViewSwitcher({
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
           <span className={`w-1.5 h-1.5 rounded-full ${watchlist === 'mtf' ? 'bg-emerald-400' : 'bg-cyan-400'}`} />
           <span className="font-medium">
-            {watchlist === 'mtf' ? 'MTF Swing Screener (216 Stocks @ 3.5x+)' : 'Alpha 132 Core Benchmark'}
+            {watchlist === 'mtf' ? 'MTF Swing Screener (216 Stocks @ 3.5x+)' : 'KoshX Core Benchmark'}
           </span>
         </div>
       </div>

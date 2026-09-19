@@ -10,7 +10,7 @@ export default function FAQSection() {
     },
     {
       q: 'Why use an Equal-Weighted Synthetic Benchmark instead of Nifty 50?',
-      a: 'Market-cap weighted indices like Nifty 50 are heavily distorted: just HDFC Bank, Reliance Industries, and ICICI Bank account for ~30% of the entire index weight! If Reliance rallies while 40 other stocks are crashing, the Nifty index prints green, misleading retail traders. Our Alpha 132 synthetic benchmark assigns each constituent exactly 1/n weight, revealing genuine market breadth, accumulation, and sector rotation.',
+      a: 'Market-cap weighted indices like Nifty 50 are heavily distorted: just HDFC Bank, Reliance Industries, and ICICI Bank account for ~30% of the entire index weight! If Reliance rallies while 40 other stocks are crashing, the Nifty index prints green, misleading retail traders. Our KoshX Core synthetic benchmark assigns each constituent exactly 1/n weight, revealing genuine market breadth, accumulation, and sector rotation.',
     },
     {
       q: 'Are the 5 quantitative alpha models subjective?',
@@ -22,11 +22,11 @@ export default function FAQSection() {
     },
     {
       q: 'How frequently is the terminal data refreshed?',
-      a: 'The terminal dataset updates after every trading day close once official NSE Bhavcopy and closing prices are published. All quantitative models, phase-space vectors, and multi-timeframe return brackets re-index automatically.',
+      a: 'The KoshX dataset updates after every trading day close once official NSE Bhavcopy and closing prices are published. All quantitative models, phase-space vectors, and multi-timeframe return brackets re-index automatically.',
     },
     {
       q: 'Can I test the terminal before paying?',
-      a: 'Yes! The Explorer Tier lets you launch the full interactive terminal to experience the equal-weighted benchmark and treemap heatmap. You can upgrade to Pro at any time to unlock the 216 MTF Stock Radar and all 5 Quant Alpha Engines.',
+      a: 'Yes! The KoshX Explorer Tier lets you launch the full interactive terminal to experience the equal-weighted benchmark and treemap heatmap. You can upgrade to Pro at any time to unlock the 216 MTF Stock Radar and all 5 Quant Alpha Engines.',
     },
   ];
 
@@ -41,7 +41,7 @@ export default function FAQSection() {
             Frequently Asked Questions
           </p>
           <p className="text-sm text-zinc-400">
-            Everything you need to know about the terminal architecture, MTF leverage, and quantitative modeling.
+            Everything you need to know about the KoshX terminal architecture, MTF leverage, and quantitative modeling.
           </p>
         </div>
 

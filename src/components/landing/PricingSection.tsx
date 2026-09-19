@@ -18,7 +18,7 @@ export default function PricingSection({ onSelectPlan, onLaunchTerminal }: Prici
       period: 'forever free',
       highlighted: false,
       features: [
-        'Alpha 132 core investment basket',
+        'KoshX Core investment basket',
         '1D Treemap Heatmap view',
         'Equal-weighted candlestick index chart',
         'Constituent breakdown table',
