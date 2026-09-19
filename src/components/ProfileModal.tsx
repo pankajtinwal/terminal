@@ -14,19 +14,20 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
   if (!isOpen) return null;
 
-  const handleUpgrade = (plan: 'pro' | 'institutional') => {
+  const handleUpgrade = (plan: 'pro_monthly' | 'pro_annual') => {
     setUpgrading(true);
     setMessage('Initializing Razorpay Checkout...');
 
+    const isAnnual = plan === 'pro_annual';
     triggerRazorpayCheckout({
-      planId: plan,
-      planName: plan === 'pro' ? 'KoshX Pro Swing Trader' : 'KoshX Institutional Terminal',
-      amountInRupees: plan === 'pro' ? 1499 : 4999,
+      planId: isAnnual ? 'pro_annual' : 'pro_monthly',
+      planName: isAnnual ? 'KoshX Pro Annual (30% OFF)' : 'KoshX Pro Monthly',
+      amountInRupees: isAnnual ? 6710 : 799,
       userEmail: profile?.email,
       userName: profile?.fullName,
       onSuccess: async (res) => {
-        await upgradePlan(plan, res.razorpay_payment_id);
-        setMessage(`Payment successful! Upgraded to ${plan.toUpperCase()}.`);
+        await upgradePlan(isAnnual ? 'pro_annual' : 'pro_monthly', res.razorpay_payment_id);
+        setMessage(`Payment successful! Upgraded to ${isAnnual ? 'PRO ANNUAL' : 'PRO MONTHLY'}.`);
         setUpgrading(false);
       },
       onFailure: (err) => {
@@ -76,7 +77,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                     : 'bg-zinc-800 text-zinc-400 border-zinc-700'
                 }`}
               >
-                {subscription.plan.toUpperCase()}
+                {subscription.plan.replace('_', ' ').toUpperCase()}
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-0.5">{profile?.email || 'trader@domain.com'}</p>
@@ -87,7 +88,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800/80 space-y-2.5 mb-5">
           <div className="flex items-center justify-between text-xs">
             <span className="text-zinc-400">Current Plan</span>
-            <span className="text-white font-semibold capitalize">{subscription.plan} Tier</span>
+            <span className="text-white font-semibold capitalize">{subscription.plan.replace('_', ' ')} Tier</span>
           </div>
           <div className="flex items-center justify-between text-xs">
             <span className="text-zinc-400">Status</span>
@@ -117,31 +118,41 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         </div>
 
         {/* Upgrade Actions */}
-        {subscription.plan !== 'institutional' && (
+        {subscription.plan !== 'pro_annual' && (
           <div className="mb-5 space-y-2">
             <label className="block text-[10px] text-zinc-400 uppercase tracking-wider">
-              Upgrade Subscription
+              {subscription.plan === 'free' ? 'Upgrade Subscription' : 'Upgrade to Annual (Save 30%)'}
             </label>
             <div className="grid grid-cols-2 gap-2">
               {subscription.plan === 'free' && (
                 <button
                   type="button"
                   disabled={upgrading}
-                  onClick={() => handleUpgrade('pro')}
-                  className="p-2.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition cursor-pointer"
+                  onClick={() => handleUpgrade('pro_monthly')}
+                  className="p-2.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition cursor-pointer text-left"
                 >
-                  Upgrade to Pro
-                  <div className="text-[10px] font-normal text-zinc-400">₹1,499 / mo</div>
+                  <div className="flex items-center justify-between">
+                    <span>Pro Monthly</span>
+                    <span className="text-[10px] text-emerald-400 font-bold">₹799/m</span>
+                  </div>
+                  <div className="text-[10px] font-normal text-zinc-400 mt-0.5">Flexible monthly access</div>
                 </button>
               )}
               <button
                 type="button"
                 disabled={upgrading}
-                onClick={() => handleUpgrade('institutional')}
-                className="p-2.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-500/40 text-cyan-300 text-xs font-bold transition cursor-pointer"
+                onClick={() => handleUpgrade('pro_annual')}
+                className={`p-2.5 rounded-lg bg-gradient-to-r from-emerald-950/60 to-zinc-900 hover:from-emerald-900/60 border border-emerald-500/50 text-white text-xs font-bold transition cursor-pointer text-left ${
+                  subscription.plan !== 'free' ? 'col-span-2' : ''
+                }`}
               >
-                Institutional Plan
-                <div className="text-[10px] font-normal text-zinc-400">₹4,999 / mo</div>
+                <div className="flex items-center justify-between">
+                  <span>Pro Annual</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">SAVE 30%</span>
+                </div>
+                <div className="text-[10px] font-normal text-emerald-300 mt-0.5">
+                  ₹6,710 / yr <span className="text-zinc-400 font-normal">(₹559/mo)</span>
+                </div>
               </button>
             </div>
           </div>

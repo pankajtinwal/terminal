@@ -43,7 +43,7 @@ export default function FeatureHighlights() {
       badge: 'Quantitative Edge',
       title: '5 Mathematical Alpha Models',
       description:
-        'Deploy institutional quantitative physics: EMA mean reversion pullback hunting, cross-sectional residual momentum, kinematic phase-space vectors, Ornstein-Uhlenbeck spreads, and fractal Hurst regimes.',
+        'Deploy systematic quantitative physics: EMA mean reversion pullback hunting, cross-sectional residual momentum, kinematic phase-space vectors, Ornstein-Uhlenbeck spreads, and fractal Hurst regimes.',
     },
     {
       icon: (
@@ -74,7 +74,7 @@ export default function FeatureHighlights() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
           <h2 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">
-            Institutional Architecture
+            Quantitative Architecture
           </h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Designed for Systematic Traders Who Require an Unfair Edge

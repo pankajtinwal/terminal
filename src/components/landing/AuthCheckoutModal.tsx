@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useAuth, type UserPlan } from '../../context/AuthContext';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { triggerRazorpayCheckout } from '../../utils/razorpay';
 
 interface AuthCheckoutModalProps {
@@ -13,14 +13,25 @@ interface AuthCheckoutModalProps {
 export default function AuthCheckoutModal({
   isOpen,
   initialMode,
-  selectedPlan = 'pro',
+  selectedPlan = 'pro_monthly',
   onClose,
   onSuccessLaunch,
 }: AuthCheckoutModalProps) {
   const { signInWithEmail, signUpWithEmail, signInWithGoogle, upgradePlan } = useAuth();
 
   const [mode, setMode] = useState<'login' | 'signup'>(initialMode);
-  const [plan, setPlan] = useState<UserPlan>((selectedPlan as UserPlan) || 'pro');
+  const [plan, setPlan] = useState<'pro_monthly' | 'pro_annual'>(
+    selectedPlan === 'pro_annual' ? 'pro_annual' : 'pro_monthly'
+  );
+
+  useEffect(() => {
+    if (selectedPlan === 'pro_annual') {
+      setPlan('pro_annual');
+    } else {
+      setPlan('pro_monthly');
+    }
+  }, [selectedPlan, isOpen]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -82,44 +93,36 @@ export default function AuthCheckoutModal({
         return;
       }
 
-      // If user selected a paid plan, trigger Razorpay
-      if (plan === 'pro' || plan === 'institutional') {
-        setStatusMsg('Launching secure Razorpay Checkout (UPI / Cards)...');
-        triggerRazorpayCheckout({
-          planId: plan,
-          planName: plan === 'pro' ? 'Pro Swing Trader' : 'Institutional Terminal',
-          amountInRupees: plan === 'pro' ? 1499 : 4999,
-          userEmail: email,
-          userName: name,
-          onSuccess: async (payRes) => {
-            await upgradePlan(plan, payRes.razorpay_payment_id);
-            setStatusMsg('Payment successful! Access unlocked.');
-            setTimeout(() => {
-              setIsProcessing(false);
-              onSuccessLaunch();
-              onClose();
-            }, 600);
-          },
-          onFailure: (err) => {
-            console.warn('Payment failed/cancelled:', err);
-            setErrorMessage('Payment was not completed. You can upgrade anytime in your terminal profile.');
+      // Trigger Razorpay for paid plan
+      const isAnnual = plan === 'pro_annual';
+      setStatusMsg('Launching secure Razorpay Checkout (UPI / Cards / NetBanking)...');
+      await triggerRazorpayCheckout({
+        planId: isAnnual ? 'pro_annual' : 'pro_monthly',
+        planName: isAnnual ? 'KoshX Pro Annual (30% OFF)' : 'KoshX Pro Monthly',
+        amountInRupees: isAnnual ? 6710 : 799,
+        userEmail: email,
+        userName: name,
+        onSuccess: async (payRes) => {
+          await upgradePlan(isAnnual ? 'pro_annual' : 'pro_monthly', payRes.razorpay_payment_id);
+          setStatusMsg('Payment successful! Access unlocked.');
+          setTimeout(() => {
             setIsProcessing(false);
-            setStatusMsg(null);
-            // Launch terminal on free tier anyway
-            setTimeout(() => {
-              onSuccessLaunch();
-              onClose();
-            }, 1000);
-          },
-        });
-      } else {
-        setStatusMsg('Account created! Entering terminal...');
-        setTimeout(() => {
+            onSuccessLaunch();
+            onClose();
+          }, 600);
+        },
+        onFailure: (err) => {
+          console.warn('Payment failed/cancelled:', err);
+          setErrorMessage('Payment was not completed. You can upgrade anytime in your terminal profile.');
           setIsProcessing(false);
-          onSuccessLaunch();
-          onClose();
-        }, 700);
-      }
+          setStatusMsg(null);
+          // Launch terminal on free tier anyway
+          setTimeout(() => {
+            onSuccessLaunch();
+            onClose();
+          }, 1000);
+        },
+      });
     }
   };
 
@@ -222,34 +225,38 @@ export default function AuthCheckoutModal({
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => setPlan('pro')}
+                onClick={() => setPlan('pro_monthly')}
                 className={`p-2.5 rounded-lg border text-left font-mono transition cursor-pointer ${
-                  plan === 'pro'
-                    ? 'bg-emerald-950/40 border-emerald-500/60 text-white'
+                  plan === 'pro_monthly'
+                    ? 'bg-emerald-950/50 border-emerald-500/80 text-white shadow-sm ring-1 ring-emerald-500/30'
                     : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
                 }`}
               >
                 <div className="text-xs font-bold flex items-center justify-between">
-                  <span>Pro Swing</span>
-                  <span className="text-[10px] text-emerald-400">₹1,499/m</span>
+                  <span>Pro Monthly</span>
+                  <span className="text-[11px] text-emerald-400 font-bold">₹799/m</span>
                 </div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">216 MTF + 5 Models</div>
+                <div className="text-[10px] text-zinc-400 mt-0.5">216 MTF + 5 Alpha Models</div>
               </button>
 
               <button
                 type="button"
-                onClick={() => setPlan('institutional')}
-                className={`p-2.5 rounded-lg border text-left font-mono transition cursor-pointer ${
-                  plan === 'institutional'
-                    ? 'bg-cyan-950/40 border-cyan-500/60 text-white'
+                onClick={() => setPlan('pro_annual')}
+                className={`p-2.5 rounded-lg border text-left font-mono transition cursor-pointer relative overflow-hidden ${
+                  plan === 'pro_annual'
+                    ? 'bg-emerald-950/50 border-emerald-500/80 text-white shadow-sm ring-1 ring-emerald-500/30'
                     : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
                 }`}
               >
                 <div className="text-xs font-bold flex items-center justify-between">
-                  <span>Institutional</span>
-                  <span className="text-[10px] text-cyan-400">₹4,999/m</span>
+                  <span>Pro Annual</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                    SAVE 30%
+                  </span>
                 </div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Full API + Custom Baskets</div>
+                <div className="text-[10px] text-emerald-400 font-semibold mt-0.5">
+                  ₹6,710/yr <span className="text-zinc-500 font-normal">(₹559/m)</span>
+                </div>
               </button>
             </div>
           </div>
@@ -318,7 +325,7 @@ export default function AuthCheckoutModal({
             ) : (
               <span>
                 {mode === 'signup'
-                  ? `Proceed with Razorpay (${plan === 'pro' ? '₹1,499' : '₹4,999'})`
+                  ? `Proceed with Razorpay (${plan === 'pro_annual' ? '₹6,710 / yr' : '₹799 / mo'})`
                   : 'Sign In & Launch Terminal'}
               </span>
             )}

@@ -10,7 +10,7 @@ export default function QuantModelsShowcase({ onLaunchTerminal }: QuantModelsSho
       title: 'EMA Mean Reversion & Pullback Hunter',
       math: 'Price ∈ [EMA20, EMA50] & EMA20 > EMA50 > EMA200',
       description:
-        'Eliminates chasing extended rallies. Filters out secular downtrends and alerts you strictly when strong institutional uptrend stocks pull back into the golden support zone between the 20 and 50 EMAs.',
+        'Eliminates chasing extended rallies. Filters out secular downtrends and alerts you strictly when strong sustained uptrend stocks pull back into the golden support zone between the 20 and 50 EMAs.',
       quadrants: ['Bull Run: Price > EMA20 > EMA50 > 200', 'Pullback Buy: Optimal low-risk swing entry', 'Trend Breakdown: Strict capital preservation exit'],
     },
     {
@@ -20,7 +20,7 @@ export default function QuantModelsShowcase({ onLaunchTerminal }: QuantModelsSho
       math: 'R_i(t) = α_i + β_i · R_m(t) + ε_i(t)',
       description:
         'Standard momentum is deceptive when the broader Nifty rises 500 points. Residual momentum regresses stock returns against the market index, isolating pure idiosyncratic company strength from general market tide.',
-      quadrants: ['Top Decile: Genuine institutional alpha', 'Market Beta: Pure macro beta ride', 'Negative Residual: Weak relative strength'],
+      quadrants: ['Top Decile: Genuine idiosyncratic alpha', 'Market Beta: Pure macro beta ride', 'Negative Residual: Weak relative strength'],
     },
     {
       id: '03',
@@ -60,7 +60,7 @@ export default function QuantModelsShowcase({ onLaunchTerminal }: QuantModelsSho
               Quantitative Edge
             </h2>
             <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              5 Mathematical Models Powering Institutional Portfolios
+              5 Mathematical Models Powering Systematic Portfolios
             </p>
             <p className="text-sm text-zinc-400">
               No subjective trendlines or vague astrology. Every signal is anchored in empirical mathematics, stochastic calculus, and Newtonian kinematics.

@@ -56,7 +56,7 @@ export default function HeroSection({ onLaunchTerminal, onOpenAuth }: HeroSectio
               onClick={() => onOpenAuth('signup', 'pro')}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 font-mono text-sm border border-zinc-700/80 transition duration-200 cursor-pointer"
             >
-              <span>Get Pro Access — ₹1,499/mo</span>
+              <span>Get Pro Access — ₹799/mo</span>
               <svg className="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
               </svg>

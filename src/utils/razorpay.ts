@@ -11,7 +11,7 @@ export interface RazorpayPaymentSuccessResponse {
 }
 
 export interface CheckoutOptions {
-  planId: 'pro' | 'institutional';
+  planId: 'pro' | 'pro_monthly' | 'pro_annual' | 'institutional' | string;
   planName: string;
   amountInRupees: number;
   userEmail?: string;
@@ -62,8 +62,8 @@ export async function triggerRazorpayCheckout(options: CheckoutOptions) {
     key: keyId,
     amount: options.amountInRupees * 100, // Amount in paise
     currency: 'INR',
-    name: 'QuantNSE Terminal',
-    description: `${options.planName} Access (30 Days)`,
+    name: 'KoshX Terminal',
+    description: `${options.planName} Access`,
     image: 'https://cdn-icons-png.flaticon.com/512/2953/2953363.png',
     handler: function (response: RazorpayPaymentSuccessResponse) {
       options.onSuccess(response);

@@ -18,11 +18,11 @@ create table if not exists public.profiles (
 create table if not exists public.subscriptions (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references public.profiles(id) on delete cascade not null unique,
-  plan text default 'free' check (plan in ('free', 'pro', 'institutional')),
+  plan text default 'free' check (plan in ('free', 'pro', 'pro_monthly', 'pro_annual', 'institutional')),
   status text default 'active' check (status in ('trial', 'active', 'past_due', 'canceled')),
   razorpay_payment_id text,
   razorpay_order_id text,
-  amount_paid integer default 0, -- in Paise (e.g. 149900 = ₹1,499)
+  amount_paid integer default 0, -- in Paise (e.g. 79900 = ₹799, 671000 = ₹6,710)
   current_period_start timestamptz default timezone('utc'::text, now()) not null,
   current_period_end timestamptz,
   created_at timestamptz default timezone('utc'::text, now()) not null,

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
-export type UserPlan = 'free' | 'pro' | 'institutional';
+export type UserPlan = 'free' | 'pro' | 'pro_monthly' | 'pro_annual' | 'institutional';
 
 export interface UserProfile {
   id: string;
@@ -297,7 +297,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Upgrade Plan after Razorpay success
   const upgradePlan = async (newPlan: UserPlan, paymentId: string) => {
-    const validUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    const isAnnual = newPlan === 'pro_annual';
+    const days = isAnnual ? 365 : 30;
+    const validUntil = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
     const updatedSub: UserSubscription = {
       plan: newPlan,
       status: 'active',
@@ -325,7 +327,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .insert({
             user_id: user.id,
             razorpay_payment_id: paymentId,
-            amount: newPlan === 'institutional' ? 499900 : 149900,
+            amount: isAnnual ? 671000 : 79900,
             plan: newPlan,
             status: 'captured',
           });
@@ -343,7 +345,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const isPro = subscription.plan === 'pro' || subscription.plan === 'institutional';
+  const isPro = subscription.plan !== 'free';
 
   return (
     <AuthContext.Provider
